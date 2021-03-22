@@ -1,8 +1,13 @@
 from tkinter import * 
 def lectura():
-    print("hola mundo")
+    from archivoLectura import lectura
+    lectura()
+   #print("hola mundo")
 def rotacionH():
-    print("rotacion Horizontal")
+    from archivoLectura import lista
+    for a in lista.iterar():
+        print(a)
+    #print("rotacion Horizontal")
 def rotacionV():
     print("rotacion Vertical")
 def transpuesta():
@@ -17,7 +22,6 @@ def agregarRec():
     print("Agregar Rectangulo")
 def agregarTRec():
     print("Agregar Triangulo Rectangulo")
-
 root=Tk()
 root.geometry('600x300')
 root.title("Menu Principal")

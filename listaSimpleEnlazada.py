@@ -1,8 +1,9 @@
 class Nodo:
-    def __init__ (self,fila,columna,dato):
+    def __init__ (self,nombre,fila,columna,image):
+        self.nombre=nombre
         self.CoorX=fila
         self.CoorY=columna
-        self.Dato=dato
+        self.image=image
         self.Siguiente=None
 
 
@@ -12,8 +13,8 @@ class listaEnlazadaMatriz:
         self.cola=None
         self.tamaño=0
         
-    def add(self,fila,columna,dato):
-        nodo=Nodo(fila,columna,dato)
+    def add(self,nombre,fila,columna,image):
+        nodo=Nodo(nombre,fila,columna,image)
         self.tamaño +=1
         
         if self.inicio:
@@ -27,11 +28,12 @@ class listaEnlazadaMatriz:
         actual = self.cola
 
         while actual:
-            dato = actual.Dato
+            nombre = actual.nombre
             x=actual.CoorX
             y=actual.CoorY
+            pic=actual.image
             actual = actual.Siguiente
-            yield x,y,dato
+            yield nombre,x,y,pic
     
     def crearlista(self,b,v):
         dato=""
