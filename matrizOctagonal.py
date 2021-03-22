@@ -143,7 +143,7 @@ while(nodo is not None):
     
 print("FIN")
 '''
-
+'''
 def graficar_matriz():
     grafo = "digraph"
     grafo+=str("{\nnode[shape=record];\n")
@@ -188,3 +188,4 @@ def graficar_matriz():
 
 
 graficar_matriz()
+'''
