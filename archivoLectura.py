@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import filedialog
 from listaSimpleEnlazada import listaEnlazadaMatriz
 lista=""
-def lectura():
+def lecturaM():
     global lista
     import xml.etree.ElementTree as ET
     lista=listaEnlazadaMatriz()

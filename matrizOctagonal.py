@@ -96,7 +96,7 @@ class matriz_Ortogonal:
             nodo=nodo.siguiente
         return False
     
-    
+'''    
 import os
 
 
@@ -123,7 +123,7 @@ nueva_matriz.insertar(10,10,"nuevo nodo")
 nueva_matriz.insertar(10,1,"nuevo nodo")
 nodo = nueva_matriz.NodoRaiz.NodoColumnas
 
-'''
+
 nodo = nueva_matriz.NodoRaiz.NodoFilas
 while(nodo is not None):
     nodo_temp = nodo.derecha
@@ -143,8 +143,8 @@ while(nodo is not None):
     
 print("FIN")
 '''
-'''
-def graficar_matriz():
+def graficar_matriz(nueva_matriz):
+    import os
     grafo = "digraph"
     grafo+=str("{\nnode[shape=record];\n")
     grafo+=str("graph[pencolor=transparent];\n")
@@ -187,5 +187,4 @@ def graficar_matriz():
     os.system("fdp -Tpng -o graph-g.png ejemplo.dot")
 
 
-graficar_matriz()
-'''
+#graficar_matriz()
