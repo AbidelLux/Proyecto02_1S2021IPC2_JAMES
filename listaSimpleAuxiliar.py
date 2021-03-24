@@ -1,9 +1,9 @@
 class Nodo:
-    def __init__ (self,nombre,fila,columna,image):
-        self.nombre=nombre
+    def __init__ (self,fila,columna,dato):
+        #self.nombre=nombre
         self.CoorX=fila
         self.CoorY=columna
-        self.image=image
+        self.dato=dato
         self.Siguiente=None
 
 
@@ -13,8 +13,8 @@ class listaEnlazadaMatriz:
         self.cola=None
         self.tamaño=0
         
-    def add(self,nombre,fila,columna,image):
-        nodo=Nodo(nombre,fila,columna,image)
+    def add(self,fila,columna,dato):
+        nodo=Nodo(fila,columna,dato)
         self.tamaño +=1
         
         if self.inicio:
@@ -28,12 +28,12 @@ class listaEnlazadaMatriz:
         actual = self.cola
 
         while actual:
-            nombre = actual.nombre
+            #nombre = actual.nombre
             x=actual.CoorX
             y=actual.CoorY
-            pic=actual.image
+            dato=actual.dato
             actual = actual.Siguiente
-            yield nombre,x,y,pic
+            yield x,y,dato
     
     def crearlista(self,b,v):
         dato=""
@@ -58,7 +58,7 @@ class listaEnlazadaMatriz:
                 return n[2]
     def buscar2(self,x,y):
         for n in self.iterar():
-            if x==int(n[0]) and y==int(n[1]):
+            if x==n[0] and y==n[1]:
                 return True
         return False
     def eliminar(self,x,y):
@@ -78,24 +78,3 @@ class listaEnlazadaMatriz:
                 return
             anterior=actual
             actual=actual.Siguiente
-#    def deletCola(self):
-#        actual=self.cola
-        
-#        if not actual:
-#           anterior=actual.Siguiente
-#           actual=actual.Siguiente
-#           self.tamaño-=1
-#           return True
-#        else:
-#            return False
-#        return False        
-#def prueba(x,y,dato):
-   # lista=listaEnlazadaMatriz()
-   # lista.add(0,0,1)
-   # lista.add(0,1,5)
-
-
-#def imprimir():
-    #lista=listaEnlazadaMatriz()
-   # for d in lista.iterar():
-    #    print(d[2])
