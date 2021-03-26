@@ -18,7 +18,7 @@ def menus():
         busca()
         horizontal(respuesta)
         bandera=True
-        letra="Rotacion Horizontal"
+        #letra="Rotacion Horizontal"
         menus()
 
     def rotacionV():
@@ -29,7 +29,7 @@ def menus():
         busca()
         vertical(respuesta)
         bandera=True
-        letra="Rotacion Vertical"
+        #letra="Rotacion Vertical"
         menus()
     def transpuesta():
         global bandera,letra
@@ -39,7 +39,7 @@ def menus():
         busca()
         traspuesta(respuesta)
         bandera=True
-        letra="Traspuesta"
+        #letra="Traspuesta"
         menus()
 
     def limpiar():
