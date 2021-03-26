@@ -57,7 +57,7 @@ class matriz_Ortogonal:
         #NodoRaiz=NodoRaiz()
         filaTemporal=nodo
         if filaTemporal.indice > indice:
-            newCabeza=NodoCabecera(tipo,indice)
+            newCabeza=NodoCabecera(tipo=tipo,indice=indice)
             newCabeza.siguiente=self.NodoRaiz.NodoFilas
             self.NodoRaiz.NodoFilas=newCabeza
         else:
@@ -65,26 +65,26 @@ class matriz_Ortogonal:
             while actual.siguiente is not None and actual.siguiente.indice <= indice:
                 actual=actual.siguiente
             if actual.indice != indice:
-                newCabeza=NodoCabecera(tipo, indice)
+                newCabeza=NodoCabecera(tipo=tipo, indice=indice)
                 newCabeza.siguiente=actual.siguiente
                 actual.siguiente=newCabeza
     def insertar(self,x,y,dato):
-        nodo=NodoMatrizOcta(x,y,dato)
+        Nodo=NodoMatrizOcta(x,y,dato)
         if self.NodoRaiz is None:
             self.NodoRaiz=NodoRaiz()
-            self.NodoRaiz.NodoColumnas=NodoCabecera("Columna",x)
-            self.NodoRaiz.NodoFilas=NodoCabecera("Fila",y)
+            self.NodoRaiz.NodoColumnas=NodoCabecera(tipo="Columna",indice=x)
+            self.NodoRaiz.NodoFilas=NodoCabecera(tipo="Fila",indice=y)
             self.NodoRaiz.NodoColumnas.siguiente=None
             self.NodoRaiz.NodoFilas.siguiente=None
-            self.NodoRaiz.NodoColumnas.abajo=nodo
-            self.NodoRaiz.NodoFilas.derecha=nodo
+            self.NodoRaiz.NodoColumnas.abajo=Nodo
+            self.NodoRaiz.NodoFilas.derecha=Nodo
         else:
             NodoAuxiliar=self.NodoRaiz
             self.insert_cabecera(NodoAuxiliar.NodoFilas,y,"Filas")
             NodoAuxiliar=self.NodoRaiz
             self.insert_cabecera(NodoAuxiliar.NodoColumnas,x,"Columna")
-            self.insertar_nodoFila(nodo)
-            self.insert_nodoColumna(nodo)
+            self.insertar_nodoFila(nodo=Nodo)
+            self.insert_nodoColumna(nodo=Nodo)
     def buscar(self,x,y):
         nodo=self.NodoRaiz.NodoColumnas
         while nodo is not None:
@@ -96,7 +96,7 @@ class matriz_Ortogonal:
             nodo=nodo.siguiente
         return False
     
-    
+'''    
 import os
 
 
@@ -123,7 +123,7 @@ nueva_matriz.insertar(10,10,"nuevo nodo")
 nueva_matriz.insertar(10,1,"nuevo nodo")
 nodo = nueva_matriz.NodoRaiz.NodoColumnas
 
-'''
+
 nodo = nueva_matriz.NodoRaiz.NodoFilas
 while(nodo is not None):
     nodo_temp = nodo.derecha
@@ -143,8 +143,8 @@ while(nodo is not None):
     
 print("FIN")
 '''
-'''
-def graficar_matriz():
+def graficar_matriz(nueva_matriz,name):
+    import os
     grafo = "digraph"
     grafo+=str("{\nnode[shape=record];\n")
     grafo+=str("graph[pencolor=transparent];\n")
@@ -181,11 +181,10 @@ def graficar_matriz():
                 if nodo.siguiente.indice==x+1:
                     nodo=nodo.siguiente         
     grafo+=str("}\n")
-    f= open("ejemplo.dot","w+")
+    f= open(name+".dot","w+")
     f.write(grafo)
     f.close()   
-    os.system("fdp -Tpng -o graph-g.png ejemplo.dot")
+    os.system("fdp -Tpng -o "+name+".png "+name+".dot")
 
 
-graficar_matriz()
-'''
+#graficar_matriz()
