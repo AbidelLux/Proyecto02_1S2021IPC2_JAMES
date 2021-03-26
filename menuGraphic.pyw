@@ -91,31 +91,31 @@ def menus():
         #ingresando los label de las coordenadas
         labelX1=Label(VenLimpiar,text="X1")
         labelX1.config(font=("verdana",12),bg="#ffffff")
-        labelX1.place(relx=0.3,rely=0.25)
+        labelX1.place(relx=0.3,rely=0.15)
         
         dato1=Entry(VenLimpiar)
-        dato1.place(relx=0.2,rely=0.35,relwidth=0.2,relheight=0.10)
+        dato1.place(relx=0.2,rely=0.25,relwidth=0.2,relheight=0.10)
         dato1.config(justify="center",state="normal",font=("Verdana",12))
         
         coma1=Label(VenLimpiar,text=",")
         coma1.config(font=("verdana",12),bg="#ffffff")
-        coma1.place(relx=0.48,rely=0.40)
+        coma1.place(relx=0.48,rely=0.30)
         
         parentesis1=Label(VenLimpiar,text="(")
         parentesis1.config(font=("verdana",32),bg="#ffffff")
-        parentesis1.place(relx=0.10,rely=0.30)
+        parentesis1.place(relx=0.10,rely=0.20)
 
         parentesis2=Label(VenLimpiar,text=")")
         parentesis2.config(font=("verdana",32),bg="#ffffff")
-        parentesis2.place(relx=0.83,rely=0.30)
+        parentesis2.place(relx=0.83,rely=0.20)
     
         dato2=Entry(VenLimpiar)
-        dato2.place(relx=0.6,rely=0.35,relwidth=0.2,relheight=0.10)
+        dato2.place(relx=0.6,rely=0.25,relwidth=0.2,relheight=0.10)
         dato2.config(justify="center",state="normal",font=("Verdana",12))
                         
         labelY1=Label(VenLimpiar,text="Y1")
         labelY1.config(font=("verdana",12),bg="#ffffff")
-        labelY1.place(relx=0.65,rely=0.25)
+        labelY1.place(relx=0.65,rely=0.15)
                 
         labelX2=Label(VenLimpiar,text="X2")
         labelX2.config(font=("verdana",12),bg="#ffffff")
