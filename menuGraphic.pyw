@@ -1,4 +1,5 @@
 from tkinter import * 
+from tkinter import messagebox
 respuesta=""
 letra=""
 bandera=False
@@ -18,7 +19,7 @@ def menus():
         busca()
         horizontal(respuesta)
         bandera=True
-        #letra="Rotacion Horizontal"
+        letra="Rotacion Horizontal"
         menus()
 
     def rotacionV():
@@ -29,7 +30,7 @@ def menus():
         busca()
         vertical(respuesta)
         bandera=True
-        #letra="Rotacion Vertical"
+        letra="Rotacion Vertical"
         menus()
     def transpuesta():
         global bandera,letra
@@ -39,11 +40,9 @@ def menus():
         busca()
         traspuesta(respuesta)
         bandera=True
-        #letra="Traspuesta"
+        letra="Traspuesta"
         menus()
 
-    def limpiar():
-        print("Limpiar")
     def agregarH():
         print("Agregar Linea Horizontal")
     def agregarV():
@@ -82,7 +81,113 @@ def menus():
     
         #for a in lista.iterar():
         #print("rotacion Horizontal")
+    def limpiarVen():
+        root.destroy()
+        VenLimpiar=Tk()
+        VenLimpiar.title("Ingrese Coordenada")
+        VenLimpiar.geometry("320x320")
+        #VenLimpiar.config(bg="#ffffff")
+        #ingresando los label de las coordenadas
+        label=Label(VenLimpiar,text="Buscar Matriz:")
+        label.grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        label.config(justify="center" , state="normal",font=("Verdana",12))
+        
+        entry=Entry(VenLimpiar)
+        entry.grid(row=0,column=1,padx="5",pady="3")
+        entry.config(justify="center",state="normal",font=("Verdana",12))   
+        entry.place(relx=0.4,relwidth=0.5, relheight=0.10)     
+        
+        labelX1=Label(VenLimpiar,text="X1")
+        labelX1.config(font=("verdana",12))
+        labelX1.place(relx=0.25,rely=0.15)
+        
+        dato1=Entry(VenLimpiar)
+        dato1.place(relx=0.2,rely=0.25,relwidth=0.2,relheight=0.10)
+        dato1.config(justify="center",state="normal",font=("Verdana",12))
+        
+        coma1=Label(VenLimpiar,text=",")
+        coma1.config(font=("verdana",12))
+        coma1.place(relx=0.48,rely=0.30)
+        
+        parentesis1=Label(VenLimpiar,text="(")
+        parentesis1.config(font=("verdana",32))
+        parentesis1.place(relx=0.10,rely=0.20)
+
+        parentesis2=Label(VenLimpiar,text=")")
+        parentesis2.config(font=("verdana",32))
+        parentesis2.place(relx=0.83,rely=0.20)
     
+        vocalM=Label(VenLimpiar,text="A")
+        vocalM.config(font=("verdana",18))
+        vocalM.place(relx=0.45,rely=0.38)
+            
+        dato2=Entry(VenLimpiar)
+        dato2.place(relx=0.6,rely=0.25,relwidth=0.2,relheight=0.10)
+        dato2.config(justify="center",state="normal",font=("Verdana",12))
+                        
+        labelY1=Label(VenLimpiar,text="Y1")
+        labelY1.config(font=("verdana",12))
+        labelY1.place(relx=0.65,rely=0.15)
+                
+        labelX2=Label(VenLimpiar,text="X2")
+        labelX2.config(font=("verdana",12))
+        labelX2.place(relx=0.25,rely=0.5)
+
+        coma1=Label(VenLimpiar,text=",")
+        coma1.config(font=("verdana",12))
+        coma1.place(relx=0.48,rely=0.5)
+        
+        labelY2=Label(VenLimpiar,text="Y2")
+        labelY2.config(font=("verdana",12))
+        labelY2.place(relx=0.65,rely=0.5)
+        
+        parentesis3=Label(VenLimpiar,text="(")
+        parentesis3.config(font=("verdana",32))
+        parentesis3.place(relx=0.10,rely=0.55)
+
+        parentesis4=Label(VenLimpiar,text=")")
+        parentesis4.config(font=("verdana",32))
+        parentesis4.place(relx=0.83,rely=0.55)
+                
+        dato3=Entry(VenLimpiar)
+        dato3.place(relx=0.2,rely=0.6,relwidth=0.2,relheight=0.10)
+        dato3.config(justify="center",state="normal",font=("Verdana",12))
+        
+        dato4=Entry(VenLimpiar)
+        dato4.place(relx=0.6,rely=0.6,relwidth=0.2,relheight=0.10)
+        dato4.config(justify="center",state="normal",font=("Verdana",12))      
+        
+        def ok2():
+            global bandera,letra
+            from operacionalMatriz import deletMatriz
+            entry.focus_set()
+            dato1.focus_set()
+            dato2.focus_set()
+            dato3.focus_set()
+            dato4.focus_set()
+            nombre=entry.get()#respuesta nombre 
+            respuesta=dato1.get()#respuesta de X1
+            respuesta1=dato2.get()#respuesta de Y1
+            respuesta2=dato3.get()#respuesta de X2
+            respuesta3=dato4.get()#respuesta de Y2
+            
+            
+            if respuesta !="" and respuesta1 !="" and respuesta2 !="" and respuesta3 !="" and nombre !="":
+                VenLimpiar.destroy() 
+                deletMatriz(nombre,respuesta,respuesta1,respuesta2,respuesta3)
+                bandera=True
+                menus()
+            else:
+                messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                #limpiarVen()
+                
+            
+        boton=Button(VenLimpiar,text="Eliminar", command=ok2)
+        boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
+        boton.config(font=("verdana",12))
+        #venP.destroy()    
+        VenLimpiar.mainloop()
+        
     root=Tk()
     root.geometry('1200x600')
     root.title("Menu Principal")
@@ -143,6 +248,7 @@ def menus():
     label2.place(relx=0.1,rely=0.9)
     if bandera ==True:
         label2['text']=letra
+    
     label2=Label(ventana1,text="Imagen Matriz Resultado")
     label2.pack()
     label2.config(font=("verdana",18),bg="#ffffff")
@@ -155,7 +261,7 @@ def menus():
     menuArchivo.add_separator()
     menuArchivo.add_command(label="Transpuesta de una Imagen",command=transpuesta)
     menuArchivo.add_separator()
-    menuArchivo.add_command(label="Limpiar la Zona de una Imagen", command=limpiar)
+    menuArchivo.add_command(label="Limpiar la Zona de una Imagen", command=limpiarVen)
     menuArchivo.add_separator()
     menuArchivo.add_command(label="Agregar Línea Horizontal a una Imagen",command=agregarH)
     menuArchivo.add_separator()
