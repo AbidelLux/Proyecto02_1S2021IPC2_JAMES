@@ -3,6 +3,7 @@ from tkinter import messagebox
 respuesta=""
 letra=""
 bandera=False
+tipoL=""
 def menus():
     global letra
     def lectura():
@@ -17,6 +18,7 @@ def menus():
         from operacionalMatriz import horizontal
         root.destroy()
         busca()
+        
         horizontal(respuesta)
         bandera=True
         letra="Rotacion Horizontal"
@@ -44,8 +46,16 @@ def menus():
         menus()
 
     def agregarH():
+        global tipoL,bandera
+        tipoL="horizontal"
+        bandera=True
+        agregarL_Ven()
         print("Agregar Linea Horizontal")
     def agregarV():
+        global tipoL,bandera
+        tipoL="vertical"
+        bandera=True
+        agregarL_Ven()
         print("Agregar Linea Vertical")
     def agregarRec():
         print("Agregar Rectangulo")
@@ -69,10 +79,16 @@ def menus():
         entry.config(justify="center",state="normal",font=("Verdana",12))
 
         def ok():
+            from archivoLectura import lista
             global respuesta
             entry.focus_set()
             respuesta=entry.get()
-            venP.destroy() 
+            if lista.buscar2(respuesta)==True:
+                venP.destroy() 
+            elif respuesta=="":
+                messagebox.showerror(message="Por favor llene el Cuadro de Texto")
+            else:
+                messagebox.showerror(message="El nombre de la matriz no existe")
         #
         boton=Button(venP,text="Buscar", command=ok)
         boton.grid(row=4, column=0, padx=5,pady=15)
@@ -135,7 +151,7 @@ def menus():
 
         coma1=Label(VenLimpiar,text=",")
         coma1.config(font=("verdana",12))
-        coma1.place(relx=0.48,rely=0.5)
+        coma1.place(relx=0.48,rely=0.6)
         
         labelY2=Label(VenLimpiar,text="Y2")
         labelY2.config(font=("verdana",12))
@@ -160,6 +176,7 @@ def menus():
         def ok2():
             global bandera,letra
             from operacionalMatriz import deletMatriz
+            from archivoLectura import lista
             entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
@@ -171,18 +188,121 @@ def menus():
             respuesta2=dato3.get()#respuesta de X2
             respuesta3=dato4.get()#respuesta de Y2
             
-            
-            if respuesta !="" and respuesta1 !="" and respuesta2 !="" and respuesta3 !="" and nombre !="":
-                VenLimpiar.destroy() 
-                deletMatriz(nombre,respuesta,respuesta1,respuesta2,respuesta3)
-                bandera=True
-                menus()
+            if lista.buscar2(nombre)==True:
+                if respuesta !="" and respuesta1 !="" and respuesta2 !="" and respuesta3 !="" and nombre !="":
+                    VenLimpiar.destroy() 
+                    deletMatriz(nombre,respuesta,respuesta1,respuesta2,respuesta3)
+                    bandera=True
+                    letra="Limpiar Zona "+str(respuesta)+","+str(respuesta1)+" "
+                    letra+=""+str(respuesta2)+","+str(respuesta3)
+                    menus()
+                else:
+                    messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                    #limpiarVen()
             else:
-                messagebox.showerror(message="Por favor llene todos los cuadros de texto")
-                #limpiarVen()
-                
+                messagebox.showerror(message="El nombre la matriz no existe")    
+    def agregarL_Ven():
+        root.destroy()
+        VenLimpiar=Tk()
+        VenLimpiar.title("Ingrese Coordenada")
+        VenLimpiar.geometry("320x320")
+        #VenLimpiar.config(bg="#ffffff")
+        #ingresando los label de las coordenadas
+        label=Label(VenLimpiar,text="Buscar Matriz:")
+        label.grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        label.config(justify="center" , state="normal",font=("Verdana",12))
+        label.place(relx=0.03,rely=0.1,)
+        
+        entry=Entry(VenLimpiar)
+        entry.grid(row=0,column=1,padx="5",pady="3")
+        entry.config(justify="center",state="normal",font=("Verdana",12))   
+        entry.place(relx=0.45,rely=0.1,relwidth=0.5, relheight=0.10)     
+        
+        labelX1=Label(VenLimpiar,text="X1")
+        labelX1.config(font=("verdana",12))
+        labelX1.place(relx=0.25,rely=0.25)
+        
+        dato1=Entry(VenLimpiar)
+        dato1.place(relx=0.2,rely=0.35,relwidth=0.2,relheight=0.10)
+        dato1.config(justify="center",state="normal",font=("Verdana",12))
+        
+        coma1=Label(VenLimpiar,text=",")
+        coma1.config(font=("verdana",12))
+        coma1.place(relx=0.48,rely=0.4)
+        
+        parentesis1=Label(VenLimpiar,text="(")
+        parentesis1.config(font=("verdana",32))
+        parentesis1.place(relx=0.10,rely=0.30)
+
+        parentesis2=Label(VenLimpiar,text=")")
+        parentesis2.config(font=("verdana",32))
+        parentesis2.place(relx=0.83,rely=0.30)
+        
+        labelY1=Label(VenLimpiar,text="Y1")
+        labelY1.config(font=("verdana",12))
+        labelY1.place(relx=0.65,rely=0.25)
+        
+        vocalM=Label(VenLimpiar,text="cantidad de Elementos")
+        vocalM.config(font=("verdana",12))
+        vocalM.place(relx=0.20,rely=0.50)
             
-        boton=Button(VenLimpiar,text="Eliminar", command=ok2)
+        dato2=Entry(VenLimpiar)
+        dato2.place(relx=0.6,rely=0.35,relwidth=0.2,relheight=0.10)
+        dato2.config(justify="center",state="normal",font=("Verdana",12))
+ 
+        dato3=Entry(VenLimpiar)
+        dato3.place(relx=0.4,rely=0.6,relwidth=0.2,relheight=0.10)
+        dato3.config(justify="center",state="normal",font=("Verdana",12))
+             
+        def ok3(): 
+            from archivoLectura import lista
+            from operacionalMatriz import agregar_H
+            from operacionalMatriz import matriz
+            global bandera,tipoL
+            entry.focus_set()
+            dato1.focus_set()
+            dato2.focus_set()
+            dato3.focus_set()
+            nombre=entry.get()#respuesta nombre 
+            respuesta=dato1.get()#respuesta de X1
+            respuesta1=dato2.get()#respuesta de Y1
+            respuesta2=dato3.get()#respuesta de X2
+            #matriz(nombre)
+            if lista.buscar2(nombre)==True:
+                dato=lista.buscar3(nombre)
+                if tipoL=="horizontal":
+                    tamano=(int(respuesta1)+int(respuesta2))-1
+                    if tamano <= int(dato[2]):
+                        if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                            VenLimpiar.destroy() 
+                            agregar_H(nombre,respuesta,respuesta1,respuesta,str(tamano))
+                            bandera=True
+                            letra="Agregar Linea Horizontal "+str(respuesta)+","+str(respuesta1)+" "
+                            letra+=""+str(respuesta2)
+                            menus()
+                        else:
+                            messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                            #limpiarVen()   
+                    else:
+                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")         
+                elif tipoL=="vertical":
+                    tamano=(int(respuesta2)+int(respuesta))-1
+                    if tamano <= int(dato[1]):
+                        if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                            VenLimpiar.destroy() 
+                            agregar_H(nombre,respuesta,respuesta1,str(tamano),respuesta1)
+                            bandera=True
+                            letra="Agregar Linea Horizontal "+str(respuesta)+","+str(respuesta1)+" "
+                            letra+=""+str(respuesta2)
+                            menus()
+                        else:
+                            messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                            #limpiarVen()   
+                    else:
+                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")  
+            else:  
+                messagebox.showerror(message="El nombre de la matriz no existe")            
+        boton=Button(VenLimpiar,text="Agregar", command=ok3)
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))
         #venP.destroy()    
@@ -246,13 +366,13 @@ def menus():
     label2.pack()
     label2.config(font=("verdana",18),bg="#ffffff")
     label2.place(relx=0.1,rely=0.9)
-    if bandera ==True:
-        label2['text']=letra
     
-    label2=Label(ventana1,text="Imagen Matriz Resultado")
-    label2.pack()
-    label2.config(font=("verdana",18),bg="#ffffff")
-    label2.place(relx=0.65,rely=0.9)
+    labelM2=Label(ventana1,text="Imagen Matriz Resultado")
+    labelM2.pack()
+    labelM2.config(font=("verdana",18),bg="#ffffff")
+    if bandera ==True:
+        labelM2['text']=letra
+    labelM2.place(relx=0.65,rely=0.9)
     #Creando el menu de operaciones 
     menuArchivo=Menu(menubar, tearoff=0)
     menuArchivo.add_command(label="Rotacion Horizontal de una Imagen",command=rotacionH)

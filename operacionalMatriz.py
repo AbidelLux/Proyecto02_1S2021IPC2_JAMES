@@ -2,7 +2,7 @@ from archivoLectura import lista
 from listaSimpleAuxiliar import listaEnlazadaMatriz
 from matrizOctagonal import matriz_Ortogonal
 from matrizOctagonal import graficar_matriz
-from graficoGraphviz import crearDot
+from graficoGraphviz import crearDot, crearDot3
 from graficoGraphviz import crearDot2
 name=""
 fila=0
@@ -77,6 +77,49 @@ def deletMatriz(dato,x1,y1,x2,y2):
                 matrizPrueba.insertar(x,y,"*")    
     crearDot2(matrizPrueba,fila,columna,sizeMatriz,"Resultado",x1,y1,x2,y2)  
 
+def agregar_H(dato,x1,y1,x2,y2):
+    global fila,columna,name,sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original=matriz(dato)
+
+    for i in range(1,fila+1):
+        for j in range(1,columna+1):
+            if Original.buscar(i,j)==True:
+                    listaAux2.add(i,j,"*")
+            else:
+                if i>=int(x1) and  i<=int(x2) and j>=int(y1) and j<=int(y2):
+                    listaAux2.add(i,j,"*")
+                else:
+                    continue
+    for x in range(1,fila+1):
+        for y in range(1,columna+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    #crearDot(matrizPrueba,fila,columna,sizeMatriz,"Resultado") 
+    crearDot3(matrizPrueba,fila,columna,sizeMatriz,"Resultado",x1,y1,x2,y2)      
+def agregar_V(dato,x1,y1,x2,y2):
+    global fila,columna,name,sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original=matriz(dato)
+
+    for i in range(1,fila+1):
+        for j in range(1,columna+1):
+            if Original.buscar(i,j)==True:
+                    listaAux2.add(i,j,"*")
+            else:
+                if i>=int(x1) and  i<=int(x2) and j>=int(y1) and j<=int(y2):
+                    listaAux2.add(i,j,"*")
+                else:
+                    continue
+    for x in range(1,fila+1):
+        for y in range(1,columna+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    #crearDot(matrizPrueba,fila,columna,sizeMatriz,"Resultado") 
+    crearDot3(matrizPrueba,fila,columna,sizeMatriz,"Resultado",x1,y1,x2,y2)
+        
 def voltearMatriz(lista):
     global fila,columna,sizeMatriz
     listaAux2=listaEnlazadaMatriz()

@@ -56,11 +56,15 @@ class listaEnlazadaMatriz:
         for n in self.iterar():
             if x==int(n[0]) and y==int(n[1]):
                 return n[2]
-    def buscar2(self,x,y):
+    def buscar2(self,name):
         for n in self.iterar():
-            if x==int(n[0]) and y==int(n[1]):
+            if n[0].upper()==name.upper():
                 return True
         return False
+    def buscar3(self,name):
+        for n in self.iterar():
+            if n[0].upper()==name.upper():
+                return n
     def eliminar(self,x,y):
         actual=self.cola
         anterior=self.cola
