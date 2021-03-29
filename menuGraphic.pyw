@@ -50,17 +50,26 @@ def menus():
         tipoL="horizontal"
         bandera=True
         agregarL_Ven()
-        print("Agregar Linea Horizontal")
+        #print("Agregar Linea Horizontal")
     def agregarV():
         global tipoL,bandera
         tipoL="vertical"
         bandera=True
         agregarL_Ven()
-        print("Agregar Linea Vertical")
+        #print("Agregar Linea Vertical")
     def agregarRec():
-        print("Agregar Rectangulo")
+        global tipoL,bandera
+        tipoL="Rectangulo"
+        bandera=True
+        venCuadraTri()
+        #print("Agregar Linea Vertical")
+        #print("Agregar Rectangulo")
     def agregarTRec():
-        print("Agregar Triangulo Rectangulo")
+        global tipoL,bandera
+        tipoL="Triangulo"
+        bandera=True
+        venCuadraTri()
+        #print("Agregar Triangulo Rectangulo")
     def imagenSize(dato):
         imagen=PhotoImage(file=dato)
         imagen=imagen.zoom(1)
@@ -149,9 +158,9 @@ def menus():
         labelX2.config(font=("verdana",12))
         labelX2.place(relx=0.25,rely=0.5)
 
-        coma1=Label(VenLimpiar,text=",")
-        coma1.config(font=("verdana",12))
-        coma1.place(relx=0.48,rely=0.6)
+        coma2=Label(VenLimpiar,text=",")
+        coma2.config(font=("verdana",12))
+        coma2.place(relx=0.48,rely=0.6)
         
         labelY2=Label(VenLimpiar,text="Y2")
         labelY2.config(font=("verdana",12))
@@ -200,7 +209,136 @@ def menus():
                     messagebox.showerror(message="Por favor llene todos los cuadros de texto")
                     #limpiarVen()
             else:
-                messagebox.showerror(message="El nombre la matriz no existe")    
+                messagebox.showerror(message="El nombre la matriz no existe")
+                
+    def venCuadraTri():
+        root.destroy()
+        VenLimpiar=Tk()
+        VenLimpiar.title("Ingrese Los datos")
+        VenLimpiar.geometry("320x320")
+        #VenLimpiar.config(bg="#ffffff")
+        #ingresando los label de las coordenadas
+        label=Label(VenLimpiar,text="Buscar Matriz:")
+        label.grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        label.config(justify="center" , state="normal",font=("Verdana",12))
+        
+        entry=Entry(VenLimpiar)
+        entry.grid(row=0,column=1,padx="5",pady="3")
+        entry.config(justify="center",state="normal",font=("Verdana",12))   
+        entry.place(relx=0.4,relwidth=0.5, relheight=0.10)     
+        
+        labelX1=Label(VenLimpiar,text="X1")
+        labelX1.config(font=("verdana",12))
+        labelX1.place(relx=0.25,rely=0.15)
+        
+        dato1=Entry(VenLimpiar)
+        dato1.place(relx=0.2,rely=0.25,relwidth=0.2,relheight=0.10)
+        dato1.config(justify="center",state="normal",font=("Verdana",12))
+        
+        coma1=Label(VenLimpiar,text=",")
+        coma1.config(font=("verdana",12))
+        coma1.place(relx=0.48,rely=0.30)
+        
+        parentesis1=Label(VenLimpiar,text="(")
+        parentesis1.config(font=("verdana",32))
+        parentesis1.place(relx=0.10,rely=0.20)
+
+        parentesis2=Label(VenLimpiar,text=")")
+        parentesis2.config(font=("verdana",32))
+        parentesis2.place(relx=0.83,rely=0.20)
+    
+        #vocalM=Label(VenLimpiar,text="A")
+        #vocalM.config(font=("verdana",18))
+        #vocalM.place(relx=0.45,rely=0.38)
+            
+        dato2=Entry(VenLimpiar)
+        dato2.place(relx=0.6,rely=0.25,relwidth=0.2,relheight=0.10)
+        dato2.config(justify="center",state="normal",font=("Verdana",12))
+                        
+        labelY1=Label(VenLimpiar,text="Y1")
+        labelY1.config(font=("verdana",12))
+        labelY1.place(relx=0.65,rely=0.15)
+                
+        labelX2=Label(VenLimpiar,text="Alto")
+        labelX2.config(font=("verdana",12))
+        labelX2.place(relx=0.25,rely=0.5)
+
+        coma2=Label(VenLimpiar,text="X")
+        coma2.config(font=("verdana",12))
+        coma2.place(relx=0.48,rely=0.6)
+        
+        labelY2=Label(VenLimpiar,text="Ancho")
+        labelY2.config(font=("verdana",12))
+        labelY2.place(relx=0.65,rely=0.5)
+                        
+        dato3=Entry(VenLimpiar)
+        dato3.place(relx=0.2,rely=0.6,relwidth=0.2,relheight=0.10)
+        dato3.config(justify="center",state="normal",font=("Verdana",12))
+        
+        dato4=Entry(VenLimpiar)
+        dato4.place(relx=0.6,rely=0.6,relwidth=0.2,relheight=0.10)
+        dato4.config(justify="center",state="normal",font=("Verdana",12))      
+        
+        def ok4():
+            global bandera,letra
+            from archivoLectura import lista
+            from operacionalMatriz import agregar_R
+            from operacionalMatriz import matriz
+            global bandera,tipoL
+            entry.focus_set()
+            dato1.focus_set()
+            dato2.focus_set()
+            dato3.focus_set()
+            nombre=entry.get()#respuesta nombre 
+            respuesta=dato1.get()#respuesta de X1
+            respuesta1=dato2.get()#respuesta de Y1
+            respuesta2=dato3.get()#respuesta de Alto
+            respuesta3=dato4.get()#respuesta de Ancho
+            #matriz(nombre)
+            if lista.buscar2(nombre)==True:
+                dato=lista.buscar3(nombre)
+                if tipoL=="Rectangulo":
+                    fila=(int(respuesta)+int(respuesta3))-1
+                    columna=(int(respuesta1)+int(respuesta2))-1
+                    if fila !=columna:
+                        if columna<= int(dato[2]) and fila<=int(dato[1]):
+                            if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                                VenLimpiar.destroy() 
+                                agregar_R(nombre,respuesta,respuesta1,str(columna),str(fila))
+                                bandera=True
+                                letra="Agregar Rectangulo "+str(respuesta)+","+str(respuesta1)+" "
+                                letra+=""+str(respuesta2)+"x"+str(respuesta3)
+                                menus()
+                            else:
+                                messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                                #limpiarVen()   
+                        else:
+                            messagebox.showerror(message="La fila o Columuna es mayor de la matriz")    
+                    else:
+                        messagebox.showerror(message="Lo sentimos pero esto es un cuadrado")             
+                elif tipoL=="Triangulo":
+                    tamano=(int(respuesta2)+int(respuesta))-1
+                    if tamano <= int(dato[1]):
+                        if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                            VenLimpiar.destroy() 
+                            #agregar_H(nombre,respuesta,respuesta1,str(tamano),respuesta1)
+                            bandera=True
+                            letra="Agregar Linea Horizontal "+str(respuesta)+","+str(respuesta1)+" "
+                            letra+=""+str(respuesta2)
+                            menus()
+                        else:
+                            messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                            #limpiarVen()   
+                    else:
+                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")  
+            else:  
+                messagebox.showerror(message="El nombre de la matriz no existe")       
+        boton=Button(VenLimpiar,text="Agregar", command=ok4)
+        boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
+        boton.config(font=("verdana",12))
+        #venP.destroy()    
+        VenLimpiar.mainloop()                          
+
     def agregarL_Ven():
         root.destroy()
         VenLimpiar=Tk()
