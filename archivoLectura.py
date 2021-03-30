@@ -5,6 +5,7 @@ lista=""
 def lecturaM():
     global lista
     import xml.etree.ElementTree as ET
+    #from menuGraphic import bandera
     lista=listaEnlazadaMatriz()
     leer=Tk()
     leer.title("Abrir Archivo")
@@ -33,6 +34,7 @@ def lecturaM():
                 print(nieto.text)
             elif nieto.tag=="imagen":
                 image=nieto.text
+                image=image.replace(" ", "")
                 image=image.replace("\t","")
                 print(image)
         if nombre!="" and filas!="" and columna!="" and image!="":
