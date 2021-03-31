@@ -1,13 +1,11 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
-from listaSimpleEnlazada import listaEnlazadaMatriz
-lista=""
+
 def lecturaM():
-    global lista
     import xml.etree.ElementTree as ET
+    from archivoLectura import lista
     #from menuGraphic import bandera
-    lista=listaEnlazadaMatriz()
     leer=Tk()
     leer.title("Abrir Archivo")
     leer.withdraw()
@@ -57,4 +55,3 @@ def lecturaM():
             else:
                 continue
     leer.mainloop()
-#lectura()   

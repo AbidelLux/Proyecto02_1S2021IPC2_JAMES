@@ -1,15 +1,17 @@
 from tkinter import * 
 from tkinter import messagebox
+from tkinter import ttk
 respuesta=""
 letra=""
 bandera=False
 tipoL=""
 def menus():
-    global letra
+    global letra, bandera 
     def lectura():
         from archivoLectura import lecturaM
         root.destroy()
         lecturaM()
+        bandera=False
         menus()
         #print("hola mundo")
     def rotacionH():
@@ -23,7 +25,6 @@ def menus():
         bandera=True
         letra="Rotacion Horizontal"
         menus()
-
     def rotacionV():
         global bandera,letra
         from archivoLectura import lista
@@ -44,7 +45,6 @@ def menus():
         bandera=True
         letra="Traspuesta"
         menus()
-
     def agregarH():
         global tipoL,bandera
         tipoL="horizontal"
@@ -324,8 +324,7 @@ def menus():
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))
         #venP.destroy()    
-        VenLimpiar.mainloop()    
-                              
+        VenLimpiar.mainloop()                              
     def agregarT_Ven():
         root.destroy()
         VenLimpiar=Tk()
@@ -413,8 +412,7 @@ def menus():
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))
         #venP.destroy()    
-        VenLimpiar.mainloop()
-        
+        VenLimpiar.mainloop()       
     def agregarL_Ven():
         root.destroy()
         VenLimpiar=Tk()
@@ -521,14 +519,98 @@ def menus():
         boton.config(font=("verdana",12))
         #venP.destroy()    
         VenLimpiar.mainloop()
+    def unioAB():
+        global tipoL,bandera
+        root.destroy()
+        tipoL="union"
+        bandera=True
+        ventana2()
+
+    def ventana2():
+        from archivoLectura import lista
+        ven=Tk()
+        ven.geometry("500x250")  
+        ven.title("selecciones Dato")
         
+        dato=lista.crearlist()
+        
+        labelA1= Label(ven,text="Elija la Primera Matriz:")
+        labelA1.config(font=("verdana",16))
+        labelA1.place(relx=0.05,rely=0.10)
+        
+        combo1= ttk.Combobox(ven,state="readonly", values=dato)
+        combo1.config(font=("verdana",12))
+        combo1.place(relx=0.07,rely=0.25,relwidth=0.6)
+        
+        labelA2=Label(ven,text="Elija la Segunda Matriz:")
+        labelA2.config(font=("verdana",16))
+        labelA2.place(relx=0.05,rely=0.35)
+        
+        combo2= ttk.Combobox(ven,state="readonly",values=dato)
+        combo2.config(font=("verdana",12))
+        combo2.place(relx=0.07,rely=0.5,relwidth=0.6)        
+        
+        def archivoAgregar():
+            from archivoLectura2 import lecturaM
+            from archivoLectura import lista
+            ven.destroy()
+            lecturaM()
+            ventana2()
+            '''
+            combo1.set("")
+            combo2.set("")
+            data=lista.crearlist()
+            combo1["values"]=data
+            combo2["values"]=data
+            '''
+            print()
+        
+        boton=Button(ven,text="Agregar\nnueva\nMatriz", command=archivoAgregar)
+        boton.place(relx=0.7,rely=0.30,relwidth=0.25,relheight=0.25)
+        boton.config(font=("verdana",12),bg="#b8daba")
+        def generarMatriz():
+            #global bandera
+            from archivoLectura import lista
+            from operacionalMatriz import Union
+            if combo1.get() !="" and combo2.get() !="":
+                matriz1=combo1.get()
+                matriz2=combo2.get()
+                dato1=lista.buscar3(matriz1)
+                dato3=int(dato1[1])+int(dato1[2])
+                dato2=lista.buscar3(matriz2)
+                dato4=int(dato2[1])+int(dato2[2])
+                if dato1[1]==dato2[1] and dato1[2]==dato2[2]:
+                    fila=int(dato1[1])
+                    columna=int(dato1[2])
+                elif dato3>dato4:
+                    fila=int(dato1[1])
+                    columna=int(dato1[2])
+                elif dato3<dato4:
+                    fila=int(dato2[1])
+                    columna=int(dato2[2])
+                    
+                if tipoL== "union":
+                    Union(matriz1,matriz2,fila,columna,dato1[1],dato1[2],dato2[1],dato2[2])
+                    ven.destroy()
+                    menus()
+            else:
+                messagebox.showerror(message="aun no has selecionado el nombre de las Matrices a Comparar")
+        boton1=Button(ven,text="Generar matriz", command=generarMatriz)
+        boton1.place(relx=0.17,rely=0.75,relwidth=0.3,relheight=0.15)
+        boton1.config(font=("verdana",12),bg="#b8daba")
+        
+        boton2=Button(ven,text="Cancel", command=archivoAgregar)
+        boton2.place(relx=0.50,rely=0.75,relwidth=0.3,relheight=0.15)
+        boton2.config(font=("verdana",12),bg="#b8daba")
+        ven.mainloop()
+        
+
     root=Tk()
     root.geometry('1200x600')
     root.title("Menu Principal")
     menubar=Menu(root)
     menubar.config(font=("verdana",48))
-    root.configure(menu=menubar)
-    
+    root.configure(menu=menubar)        
 
     #creando un frame
     ventana1=Frame(root)
@@ -606,7 +688,7 @@ def menus():
     menuArchivo.add_command(label="Agregar Triángulo Rectangulo",command=agregarTRec)
     #menuArchivo.geometry("10x300")
     menuArchivo2=Menu(menubar,tearoff=0)
-    menuArchivo2.add_command(label="A Union B")
+    menuArchivo2.add_command(label="A Union B",command=unioAB)
     menuArchivo2.add_separator()
     menuArchivo2.add_command(label="A Interseccion B")
     menuArchivo2.add_separator()

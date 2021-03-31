@@ -49,9 +49,20 @@ class listaEnlazadaMatriz:
                             dato+=str(n[2])+"]"
                         else:
                             dato+=str(n[2])+","
+                        
         dato=dato.split("/")
         return dato  
-                      
+    def crearlist(self):
+        names=""
+        for count,n in enumerate(self.iterar()):
+            if count==0:
+                names+=''+str(n[0])+','
+            elif (self.tamaño-1)==count:
+                names+=str(n[0])+''
+            else:
+                names+=str(n[0])+','  
+        names=names.split(",")  
+        return names          
     def buscar(self,x,y):
         for n in self.iterar():
             if x==int(n[0]) and y==int(n[1]):

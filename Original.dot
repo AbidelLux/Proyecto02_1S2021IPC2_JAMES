@@ -1,6 +1,7 @@
 digraph {
+	size="8,8"
+	label="Matriz_1 U Matriz_3"
 	tbl [
-	size="4,4"
 	shape=plaintext
 	label=<
 
@@ -16,6 +17,23 @@ digraph {
 			<tr><td color="green"> 8 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td></tr>
 			<tr><td color="green"> 9 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td></tr>
 			<tr><td color="green"> 10 </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			</table>
+		>];
+	tbl1 [
+	shape=plaintext
+	label=<
+
+		<table border="0" color="green" cellpadding="10" cellborder="1" cellspacing="0">
+	<tr><td bgcolor = "red" color="black"> A </td><td color="green">1</td><td color="green">2</td><td color="green">3</td><td color="green">4</td><td color="green">5</td><td color="green">6</td><td color="green">7</td><td color="green">8</td></tr>
+			<tr><td color="green"> 1 </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 2 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 3 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 4 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 5 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 6 </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 7 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 8 </td><td color="blue">   </td><td color="blue"> * </td><td color="blue"> * </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
+			<tr><td color="green"> 9 </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td><td color="blue">   </td></tr>
 			</table>
 		>];
 }
