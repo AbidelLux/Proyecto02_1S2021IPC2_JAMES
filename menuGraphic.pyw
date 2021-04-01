@@ -1,16 +1,20 @@
 from tkinter import * 
 from tkinter import messagebox
 from tkinter import ttk
+from tkPDFViewer import tkPDFViewer as pdf
 respuesta=""
 letra=""
 bandera=False
+Archivo=False
 tipoL=""
 def menus():
-    global letra, bandera 
+    global letra, bandera, Archivo
     def lectura():
+        global bandera,Archivo
         from archivoLectura import lecturaM
         root.destroy()
         lecturaM()
+        Archivo=True
         bandera=False
         menus()
         #print("hola mundo")
@@ -77,20 +81,32 @@ def menus():
         return imagen
         #labelImage1['image']=imagen
     def busca():
+        global Archivo
+        from archivoLectura import lista
         venP=Tk()
+        def cerrar_app():
+            venP.destroy()
+            menus()
+            
+        venP.protocol("WM_DELETE_WINDOW", cerrar_app)   
         label=Label(venP,text="Ingrese el nombre  de la Matriz")
         label.grid(row=0, column=0, sticky="w", padx=5, pady=5)
         label.config(justify="center" , state="normal",font=("Verdana",12))
 
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
+
         #creando la caja de texto 
-        entry=Entry(venP)
+        entry=ttk.Combobox(venP,state="readonly",values=dato)
         entry.grid(row=3,column=0,padx=5,pady=10)
-        entry.config(justify="center",state="normal",font=("Verdana",12))
+        entry.config(font=("Verdana",12))
 
         def ok():
             from archivoLectura import lista
             global respuesta
-            entry.focus_set()
+            #entry.focus_set()
             respuesta=entry.get()
             if lista.buscar2(respuesta)==True:
                 venP.destroy() 
@@ -107,17 +123,29 @@ def menus():
         #for a in lista.iterar():
         #print("rotacion Horizontal")
     def limpiarVen():
+        from archivoLectura import lista
         root.destroy()
         VenLimpiar=Tk()
         VenLimpiar.title("Ingrese Coordenada")
         VenLimpiar.geometry("320x320")
+        
+        def cerrar_app():
+            VenLimpiar.destroy()
+            menus()
+            
+        VenLimpiar.protocol("WM_DELETE_WINDOW", cerrar_app)   
         #VenLimpiar.config(bg="#ffffff")
         #ingresando los label de las coordenadas
         label=Label(VenLimpiar,text="Buscar Matriz:")
         label.grid(row=1, column=0, sticky="w", padx=5, pady=5)
         label.config(justify="center" , state="normal",font=("Verdana",12))
         
-        entry=Entry(VenLimpiar)
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""    
+                
+        entry=ttk.Combobox(VenLimpiar,state="readonly",values=dato)
         entry.grid(row=0,column=1,padx="5",pady="3")
         entry.config(justify="center",state="normal",font=("Verdana",12))   
         entry.place(relx=0.4,relwidth=0.5, relheight=0.10)     
@@ -186,7 +214,7 @@ def menus():
             global bandera,letra
             from operacionalMatriz import deletMatriz
             from archivoLectura import lista
-            entry.focus_set()
+            #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
             dato3.focus_set()
@@ -214,18 +242,30 @@ def menus():
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))        
     def venCuadraTri():
-
+        from archivoLectura import lista
         root.destroy()
         VenLimpiar=Tk()
         VenLimpiar.title("Ingrese Los datos")
         VenLimpiar.geometry("320x320")
+
+        def cerrar_app():
+            VenLimpiar.destroy()
+            menus()
+            
+        VenLimpiar.protocol("WM_DELETE_WINDOW", cerrar_app)           
+        
         #VenLimpiar.config(bg="#ffffff")
         #ingresando los label de las coordenadas
         label=Label(VenLimpiar,text="Buscar Matriz:")
         label.grid(row=1, column=0, sticky="w", padx=5, pady=5)
         label.config(justify="center" , state="normal",font=("Verdana",12))
+
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
         
-        entry=Entry(VenLimpiar)
+        entry=ttk.Combobox(VenLimpiar,state="readonly",values=dato)
         entry.grid(row=0,column=1,padx="5",pady="3")
         entry.config(justify="center",state="normal",font=("Verdana",12))   
         entry.place(relx=0.4,relwidth=0.5, relheight=0.10)     
@@ -283,12 +323,12 @@ def menus():
         dato4.config(justify="center",state="normal",font=("Verdana",12))      
         
         def ok4():
-            global bandera,letra
+            global bandera,letra,tipoL
             from archivoLectura import lista
             from operacionalMatriz import agregar_R
             from operacionalMatriz import matriz
-            global bandera,tipoL
-            entry.focus_set()
+            
+            #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
             dato3.focus_set()
@@ -326,10 +366,18 @@ def menus():
         #venP.destroy()    
         VenLimpiar.mainloop()                              
     def agregarT_Ven():
+        from archivoLectura import lista
         root.destroy()
         VenLimpiar=Tk()
         VenLimpiar.title("Ingrese Coordenada")
         VenLimpiar.geometry("320x320")
+
+        def cerrar_app():
+            VenLimpiar.destroy()
+            menus()
+            
+        VenLimpiar.protocol("WM_DELETE_WINDOW", cerrar_app)           
+        
         #VenLimpiar.config(bg="#ffffff")
         #ingresando los label de las coordenadas
         label=Label(VenLimpiar,text="Buscar Matriz:")
@@ -337,7 +385,12 @@ def menus():
         label.config(justify="center" , state="normal",font=("Verdana",12))
         label.place(relx=0.03,rely=0.1,)
         
-        entry=Entry(VenLimpiar)
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
+        
+        entry=ttk.Combobox(VenLimpiar,state="readonly",values=dato)
         entry.grid(row=0,column=1,padx="5",pady="3")
         entry.config(justify="center",state="normal",font=("Verdana",12))   
         entry.place(relx=0.45,rely=0.1,relwidth=0.5, relheight=0.10)     
@@ -380,7 +433,7 @@ def menus():
         def ok5():
             from archivoLectura import lista
             from operacionalMatriz import agregar_T
-            entry.focus_set()
+            #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
             dato3.focus_set()
@@ -414,10 +467,17 @@ def menus():
         #venP.destroy()    
         VenLimpiar.mainloop()       
     def agregarL_Ven():
+        from archivoLectura import lista
         root.destroy()
         VenLimpiar=Tk()
         VenLimpiar.title("Ingrese Coordenada")
         VenLimpiar.geometry("320x320")
+
+        def cerrar_app():
+            VenLimpiar.destroy()
+            menus()
+            
+        VenLimpiar.protocol("WM_DELETE_WINDOW", cerrar_app)   
         #VenLimpiar.config(bg="#ffffff")
         #ingresando los label de las coordenadas
         label=Label(VenLimpiar,text="Buscar Matriz:")
@@ -425,7 +485,12 @@ def menus():
         label.config(justify="center" , state="normal",font=("Verdana",12))
         label.place(relx=0.03,rely=0.1,)
         
-        entry=Entry(VenLimpiar)
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
+        
+        entry=ttk.Combobox(VenLimpiar,state="readonly",values=dato)
         entry.grid(row=0,column=1,padx="5",pady="3")
         entry.config(justify="center",state="normal",font=("Verdana",12))   
         entry.place(relx=0.45,rely=0.1,relwidth=0.5, relheight=0.10)     
@@ -471,7 +536,7 @@ def menus():
             from operacionalMatriz import agregar_H
             from operacionalMatriz import matriz
             global bandera,tipoL
-            entry.focus_set()
+            #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
             dato3.focus_set()
@@ -520,20 +585,50 @@ def menus():
         #venP.destroy()    
         VenLimpiar.mainloop()
     def unioAB():
-        global tipoL,bandera
+        global tipoL,bandera,letra
         root.destroy()
         tipoL="union"
         bandera=True
+        letra="Resultado Union A,B"
         ventana2()
-
+    def interseccionAB():
+        global tipoL,bandera,letra
+        root.destroy()
+        tipoL="interseccion"
+        bandera=True
+        letra="Resultado Interseccion A,B"
+        ventana2()
+    def diferencia():
+        global tipoL,bandera,letra
+        root.destroy()
+        tipoL="diferencia"
+        bandera=True
+        letra="Resultado Diferencia A,B"
+        ventana2()     
+    def simetrica():
+        global tipoL,bandera,letra
+        root.destroy()
+        tipoL="simetrica"
+        bandera=True
+        letra="Resultado Diferencia Simetrica A,B"
+        ventana2()                          
     def ventana2():
+        global Archivo
         from archivoLectura import lista
         ven=Tk()
         ven.geometry("500x250")  
         ven.title("selecciones Dato")
-        
-        dato=lista.crearlist()
-        
+
+        def cerrar_app():
+            ven.destroy()
+            menus()
+            
+        ven.protocol("WM_DELETE_WINDOW", cerrar_app)            
+         
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
         labelA1= Label(ven,text="Elija la Primera Matriz:")
         labelA1.config(font=("verdana",16))
         labelA1.place(relx=0.05,rely=0.10)
@@ -571,7 +666,7 @@ def menus():
         def generarMatriz():
             #global bandera
             from archivoLectura import lista
-            from operacionalMatriz import Union
+            from operacionalMatriz import Union,intersection,dif,simetria
             if combo1.get() !="" and combo2.get() !="":
                 matriz1=combo1.get()
                 matriz2=combo2.get()
@@ -593,6 +688,18 @@ def menus():
                     Union(matriz1,matriz2,fila,columna,dato1[1],dato1[2],dato2[1],dato2[2])
                     ven.destroy()
                     menus()
+                elif tipoL=="interseccion":
+                    intersection(matriz1,matriz2,fila,columna,dato1[1],dato1[2],dato2[1],dato2[2])
+                    ven.destroy()
+                    menus()
+                elif tipoL=="diferencia":
+                    dif(matriz1,matriz2,fila,columna,dato1[1],dato1[2],dato2[1],dato2[2])
+                    ven.destroy()
+                    menus()  
+                elif tipoL=="simetrica":   
+                    simetria(matriz1,matriz2,fila,columna,dato1[1],dato1[2],dato2[1],dato2[2])
+                    ven.destroy()
+                    menus()             
             else:
                 messagebox.showerror(message="aun no has selecionado el nombre de las Matrices a Comparar")
         boton1=Button(ven,text="Generar matriz", command=generarMatriz)
@@ -603,8 +710,36 @@ def menus():
         boton2.place(relx=0.50,rely=0.75,relwidth=0.3,relheight=0.15)
         boton2.config(font=("verdana",12),bg="#b8daba")
         ven.mainloop()
+    def docPdf():
+        root.destroy()
+        lector=Tk()
+        lector.geometry("1000x700")
+        lector.title("Lector de PDF")
         
-
+        def cerrar_app():
+            lector.destroy()
+            menus()
+            
+        lector.protocol("WM_DELETE_WINDOW", cerrar_app)
+        v1=pdf.ShowPdf().pdf_view(lector,pdf_location="Documentacion/Documentacion_201602983.pdf",width=100,height=100)
+        v1.pack()
+        v1.place(relx=0.1,rely=0,relwidth=0.75,relheight=1)
+        #print()  
+        lector.mainloop() 
+    def Info():
+        panel= Tk()
+        panel.geometry("750x320")
+        panel.title("Informacion del Estudiante")
+        def cerrar_app():
+            panel.destroy()
+            
+        panel.protocol("WM_DELETE_WINDOW", cerrar_app)        
+        tile=Label(panel,text="Jaime Alejandro Armira Us\n201602983\nIntroduccion a la Programacion y Computacion 2 Seccion \"D\"\nIngenieria en Ciencias y Sistemas\nPrimer Semestre 2021")
+        tile.pack()
+        tile.config(font=("Arial",20))
+        tile.place(relx=0,rely=0.05,relwidth=1, relheight=1)
+        panel.mainloop()
+        print()
     root=Tk()
     root.geometry('1200x600')
     root.title("Menu Principal")
@@ -637,6 +772,15 @@ def menus():
     imageVen2.config(highlightbackground="black", highlightcolor="black", highlightthickness=1)
     imageVen2.place(relx=0.55,rely=0.10, relwidth=0.4, relheight=0.8)  
     
+    scroll=Scrollbar(imageVen1,orient='horizontal')
+    scroll.pack(side=BOTTOM,fill=X,expand=True)
+    scroll.place(relx=0,rely=0.96,relwidth=1,relheight=0.05)
+
+    scroll1=Scrollbar(imageVen2,orient='horizontal')
+    scroll1.pack()
+    scroll1.place(relx=0,rely=0.96,relwidth=1,relheight=0.05)    
+
+        
     if bandera==True:
         imagen=imagenSize("Original.dot.png")
         labelImage1=Label(imageVen1,image=imagen,bd=0)    
@@ -652,6 +796,7 @@ def menus():
         labelImage2.place(relx=0,rely=0)
         #width=57, height=27
         #label2['text']=letra
+
     #label para el frame ventana1
     label1=Label(ventana1,text="=")
     label1.pack()
@@ -688,13 +833,18 @@ def menus():
     menuArchivo.add_command(label="Agregar Triángulo Rectangulo",command=agregarTRec)
     #menuArchivo.geometry("10x300")
     menuArchivo2=Menu(menubar,tearoff=0)
-    menuArchivo2.add_command(label="A Union B",command=unioAB)
+    menuArchivo2.add_command(label="Union A,B",command=unioAB)
     menuArchivo2.add_separator()
-    menuArchivo2.add_command(label="A Interseccion B")
+    menuArchivo2.add_command(label="Interseccion A,B",command=interseccionAB)
     menuArchivo2.add_separator()
-    menuArchivo2.add_command(label="A Diferencia B")
+    menuArchivo2.add_command(label="Diferencia A,B",command=diferencia)
     menuArchivo2.add_separator()
-    menuArchivo2.add_command(label="A Diferencia Simetrica B")
+    menuArchivo2.add_command(label="Diferencia Simetrica A,B",command=simetrica)
+    
+    menuAyuda=Menu(menubar, tearoff=0)
+    menuAyuda.add_cascade(label="Formacion del Estudiante",command=Info)
+    menuAyuda.add_separator()
+    menuAyuda.add_cascade(label="Documentacion del Programa",command=docPdf)
     
     menuOperacional=Menu(menubar,tearoff=0)
     menuOperacional.add_cascade(label="Operacion a Una imagen",menu=menuArchivo)
@@ -704,6 +854,6 @@ def menus():
     menubar.add_cascade(label="Cargar Archivo", command=lectura)
     menubar.add_cascade(label="Operaciones",menu=menuOperacional)
     menubar.add_cascade(label="Reporte")
-    menubar.add_cascade(label="Ayuda")
+    menubar.add_cascade(label="Ayuda", menu=menuAyuda)
     root.mainloop()    
 menus()

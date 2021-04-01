@@ -190,7 +190,7 @@ def Union(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
     matrizPrueba=matriz_Ortogonal()
     Original1=matriz(dato1,False) 
     Original2=matriz(dato2,False)
-    name=''+str(dato1)+' U '+str(dato2)
+    name=''+str(dato1)+' Union '+str(dato2)
     crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
     for i in range(1,fila1+1):
         for j in range(1,columna1+1):
@@ -203,7 +203,75 @@ def Union(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
             if listaAux2.buscar2(x,y)==True:
                 matrizPrueba.insertar(x,y,"*")   
     crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")        
-     
+
+def intersection(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    name=''+str(dato1)+' Intersección '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==True and Original2.buscar(i,j)==True:
+                listaAux2.add(i,j,"*")
+            else:
+                continue
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")      
+
+def dif(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    name=''+str(dato1)+' - '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==True and Original2.buscar(i,j)==True:
+                continue
+            else:
+                if Original1.buscar(i,j)==True and Original2.buscar(i,j)==False:
+                    listaAux2.add(i,j,"*")
+                else:
+                    continue
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")  
+    
+def simetria(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    name=''+str(dato1)+' - '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==True and Original2.buscar(i,j)==True:
+                continue
+            else:
+                if Original1.buscar(i,j)==True and Original2.buscar(i,j)==False:
+                    listaAux2.add(i,j,"*")
+                elif Original1.buscar(i,j)==False and Original2.buscar(i,j)==True:
+                    listaAux2.add(i,j,"*")
+                else:
+                    continue
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")  
+        
 def voltearMatriz(lista):
     global fila,columna,sizeMatriz
     listaAux2=listaEnlazadaMatriz()

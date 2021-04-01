@@ -76,6 +76,7 @@ class listaEnlazadaMatriz:
         for n in self.iterar():
             if n[0].upper()==name.upper():
                 return n
+
     def eliminar(self,x,y):
         actual=self.cola
         anterior=self.cola
