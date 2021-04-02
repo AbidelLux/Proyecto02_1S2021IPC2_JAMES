@@ -1,14 +1,15 @@
-from archivoLectura import lista
+from archivoLectura import lista,fechaHora
 from listaSimpleAuxiliar import listaEnlazadaMatriz
 from matrizOctagonal import matriz_Ortogonal
 from matrizOctagonal import graficar_matriz
-from graficoGraphviz import crearDot, crearDot3
+from graficoGraphviz import crearDot, crearDot3,crearDot6
 from graficoGraphviz import crearDot2,crearDot4,crearDot5
+from inicio import report
 name=""
 fila=0
 columna=0
 sizeMatriz=0
-def matriz(nombre):
+def matriz(nombre,bandera):
     global fila,columna,name,sizeMatriz
     matrizOriginal=matriz_Ortogonal()
     picture=""
@@ -26,18 +27,21 @@ def matriz(nombre):
     numero=int(len(picture))
     picture.pop(numero-1)
     #picture=picture.remove("")
-    for x in range(fila):
-        for y in range(columna):
+    for x in range(fila-1):
+        for y in range(columna-1):
             if picture[x][y]=="*":
                 matrizOriginal.insertar(x+1,y+1,picture[x][y])
     sizeMatriz=int(len(picture))+2                
     #graficar_matriz(matrizOriginal,"Matriz_Original")
-    crearDot(matrizOriginal,fila,columna,sizeMatriz,"Original")
+    if bandera==True:
+        report.add(''+str(fechaHora())+'Generanado matriz Original - matriz Usada: '+nombre+'')
+        crearDot(matrizOriginal,fila,columna,sizeMatriz,"Original")
     return matrizOriginal
 
 def horizontal(dato):
     global fila,columna,name,sizeMatriz
-    Original=matriz(dato)
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Rotacion Horizontal - matriz Usada: '+dato+'')
     prueba0=voltearMatriz(Original)
     prueba1=rotarMatriz(prueba0)
     prueba2=rotarMatriz(prueba1)
@@ -46,7 +50,8 @@ def horizontal(dato):
 
 def traspuesta(dato):
     global fila,columna,name,sizeMatriz
-    Original=matriz(dato)
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Traspuesta - matriz Usada: '+dato+'')
     prueba0=voltearMatriz(Original)
     prueba1=rotarMatriz(prueba0)
     #crearDot(prueba0,fila,columna,sizeMatriz,"Resultado1")
@@ -54,15 +59,16 @@ def traspuesta(dato):
 
 def vertical(dato):
     global fila,columna,name,sizeMatriz
-    Original=matriz(dato)
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Rotacion vertical - matriz Usada: '+dato+'')
     prueba0=voltearMatriz(Original)   
     crearDot(prueba0,fila,columna,sizeMatriz,"Resultado")        
 def deletMatriz(dato,x1,y1,x2,y2):
     global fila,columna,name,sizeMatriz
     listaAux2=listaEnlazadaMatriz()
     matrizPrueba=matriz_Ortogonal()
-    Original=matriz(dato)
-
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Limpiar Area - matriz Usada: '+dato+'')
     for i in range(1,fila+1):
         for j in range(1,columna+1):
             if Original.buscar(i,j)==True:
@@ -81,8 +87,8 @@ def agregar_H(dato,x1,y1,x2,y2):
     global fila,columna,name,sizeMatriz
     listaAux2=listaEnlazadaMatriz()
     matrizPrueba=matriz_Ortogonal()
-    Original=matriz(dato)
-
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Agregar Linea Horizontal - matriz Usada: '+dato+'')
     for i in range(1,fila+1):
         for j in range(1,columna+1):
             if Original.buscar(i,j)==True:
@@ -102,8 +108,8 @@ def agregar_V(dato,x1,y1,x2,y2):
     global fila,columna,name,sizeMatriz
     listaAux2=listaEnlazadaMatriz()
     matrizPrueba=matriz_Ortogonal()
-    Original=matriz(dato)
-
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Agregar Linea Vertical - matriz Usada: '+dato+'')
     for i in range(1,fila+1):
         for j in range(1,columna+1):
             if Original.buscar(i,j)==True:
@@ -123,8 +129,8 @@ def agregar_R(dato,x1,y1,x2,y2):
     global fila,columna,name,sizeMatriz
     listaAux2=listaEnlazadaMatriz()
     matrizPrueba=matriz_Ortogonal()
-    Original=matriz(dato)
-
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Agregar Rectangulo - matriz Usada: '+dato+'')
     for i in range(1,fila+1):
         for j in range(1,columna+1):
             if Original.buscar(i,j)==True:
@@ -151,7 +157,8 @@ def agregar_T(dato,x1,y1,x2,y2):
     global fila,columna,name,sizeMatriz
     listaAux2=listaEnlazadaMatriz()
     matrizPrueba=matriz_Ortogonal()
-    Original=matriz(dato)
+    Original=matriz(dato,True)
+    report.add(''+str(fechaHora())+'Agregar Triangulo Rectangulo - matriz Usada: '+dato+'')
     n=1
     for i in range(1,fila+1):
         bandera=False
@@ -182,7 +189,99 @@ def agregar_T(dato,x1,y1,x2,y2):
                 matrizPrueba.insertar(x,y,"*")   
     #crearDot(matrizPrueba,fila,columna,sizeMatriz,"Resultado") 
     crearDot5(matrizPrueba,fila,columna,sizeMatriz,"Resultado",x1,y1,x2,y2)         
-            
+
+def Union(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    report.add(''+str(fechaHora())+'Union - matrices Usadas: ('+dato1+','+dato2+')')
+    name=''+str(dato1)+' Union '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==False and Original2.buscar(i,j)==False:
+                continue
+            else:
+                listaAux2.add(i,j,"*")
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")        
+
+def intersection(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    report.add(''+str(fechaHora())+'Interseccion - matrices Usadas: ('+dato1+','+dato2+')')
+    name=''+str(dato1)+' Intersección '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==True and Original2.buscar(i,j)==True:
+                listaAux2.add(i,j,"*")
+            else:
+                continue
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")      
+
+def dif(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    report.add(''+str(fechaHora())+'Diferencia - matrices Usadas: ('+dato1+','+dato2+')')
+    name=''+str(dato1)+' - '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==True and Original2.buscar(i,j)==True:
+                continue
+            else:
+                if Original1.buscar(i,j)==True and Original2.buscar(i,j)==False:
+                    listaAux2.add(i,j,"*")
+                else:
+                    continue
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")  
+    
+def simetria(dato1, dato2, fila1,columna1,x1,y1,x2,y2):
+    global sizeMatriz
+    listaAux2=listaEnlazadaMatriz()
+    matrizPrueba=matriz_Ortogonal()
+    Original1=matriz(dato1,False) 
+    Original2=matriz(dato2,False)
+    report.add(''+str(fechaHora())+'Diferencia Simetrica - matrices Usadas: ('+dato1+','+dato2+')')
+    name=''+str(dato1)+' - '+str(dato2)
+    crearDot6(Original1,Original2,x1,y1,x2,y2,name,"Original")    
+    for i in range(1,fila1+1):
+        for j in range(1,columna1+1):
+            if Original1.buscar(i,j)==True and Original2.buscar(i,j)==True:
+                continue
+            else:
+                if Original1.buscar(i,j)==True and Original2.buscar(i,j)==False:
+                    listaAux2.add(i,j,"*")
+                elif Original1.buscar(i,j)==False and Original2.buscar(i,j)==True:
+                    listaAux2.add(i,j,"*")
+                else:
+                    continue
+    for x in range(1,fila1+1):
+        for y in range(1,columna1+1):
+            if listaAux2.buscar2(x,y)==True:
+                matrizPrueba.insertar(x,y,"*")   
+    crearDot(matrizPrueba,fila1,columna1,sizeMatriz,"Resultado")  
+        
 def voltearMatriz(lista):
     global fila,columna,sizeMatriz
     listaAux2=listaEnlazadaMatriz()
