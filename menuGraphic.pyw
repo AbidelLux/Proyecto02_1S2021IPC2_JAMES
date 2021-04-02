@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from tkPDFViewer import tkPDFViewer as pdf
+#REPORT=""
 respuesta=""
 letra=""
 bandera=False
@@ -612,6 +613,9 @@ def menus():
         bandera=True
         letra="Resultado Diferencia Simetrica A,B"
         ventana2()                          
+    def saberBandera():
+        global Archivo
+        Archivo=True
     def ventana2():
         global Archivo
         from archivoLectura import lista
@@ -625,10 +629,11 @@ def menus():
             
         ven.protocol("WM_DELETE_WINDOW", cerrar_app)            
          
-        if Archivo==True:   
+        if Archivo==True:
             dato=lista.crearlist()
         else:
             dato=""
+            
         labelA1= Label(ven,text="Elija la Primera Matriz:")
         labelA1.config(font=("verdana",16))
         labelA1.place(relx=0.05,rely=0.10)
@@ -646,10 +651,12 @@ def menus():
         combo2.place(relx=0.07,rely=0.5,relwidth=0.6)        
         
         def archivoAgregar():
+            global Archivo
             from archivoLectura2 import lecturaM
             from archivoLectura import lista
             ven.destroy()
             lecturaM()
+            saberBandera()
             ventana2()
             '''
             combo1.set("")
@@ -740,6 +747,9 @@ def menus():
         tile.place(relx=0,rely=0.05,relwidth=1, relheight=1)
         panel.mainloop()
         print()
+    def report():
+        from HTML import pageweb
+        pageweb()
     root=Tk()
     root.geometry('1200x600')
     root.title("Menu Principal")
@@ -853,7 +863,13 @@ def menus():
     #  Creando los titulos del menu
     menubar.add_cascade(label="Cargar Archivo", command=lectura)
     menubar.add_cascade(label="Operaciones",menu=menuOperacional)
-    menubar.add_cascade(label="Reporte")
+    menubar.add_cascade(label="Reporte", command=report)
     menubar.add_cascade(label="Ayuda", menu=menuAyuda)
     root.mainloop()    
-menus()
+
+def principal():
+    #global REPORT
+    from inicio import reporte
+    reporte()
+    menus()
+principal()

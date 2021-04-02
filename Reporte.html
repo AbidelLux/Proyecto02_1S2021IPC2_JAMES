@@ -1,13 +1,4 @@
 
-import webbrowser
-def pageweb():
-    from inicio import report
-    #from lista import evalue
-    #from lista import tipo
-    #aux=""
-    mensaje=""
-    f = open('Reporte.html','w')
-    mensaje ="""
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -53,15 +44,8 @@ def pageweb():
         <section>
             <div id="textPr">
                 <article><br>
-        """
-
-    
-       
-    mensaje2="\n<p>"
-    for n in report.iterar():
-            mensaje2+=n+'<br>'
-      
-    mensaje3="""
+        
+<p>2/4/2021 - 1:43:53 - Matriz_1 - Espacios LLenos:30 - Espacios Vacios:70<br>2/4/2021 - 1:43:53 - Matriz_2 - Espacios LLenos:14 - Espacios Vacios:50<br>2/4/2021 - 1:44:8 - Matriz_3 - Espacios LLenos:12 - Espacios Vacios:60<br>2/4/2021 - 1:44:19 - Union - matrices Usadas: (Matriz_1,Matriz_3)<br>
     </p>
     </article>
             </div>        
@@ -69,16 +53,4 @@ def pageweb():
              </div>
             </body>
         </html>
-    """       
-     
-    unir=mensaje+mensaje2+mensaje3
-    f.write(unir)
-    f.close()   
-
-
-    #Cambia la ruta para indicar la localización del archivo
-    #nombreArchivo = 'file:///Users/username/Desktop/programming-historian/' + 'holamundo.html'
-    #webbrowser.open_new_tab(nombreArchivo)
-    #d=webbrowser.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s')
-    #d.open_new_tab('file:/Reporte.html')
-    webbrowser.open_new_tab('Reporte.html')
+    

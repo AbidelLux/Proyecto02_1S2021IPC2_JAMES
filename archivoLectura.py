@@ -1,13 +1,15 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
-from listaSimpleEnlazada import listaEnlazadaMatriz
+from listaSimpleEnlazada import listaEnlazadaMatriz as guardar
+
 lista=""
 def lecturaM():
     global lista
     import xml.etree.ElementTree as ET
+    from inicio import report
     #from menuGraphic import bandera
-    lista=listaEnlazadaMatriz()
+    lista=guardar()
     leer=Tk()
     leer.title("Abrir Archivo")
     leer.withdraw()
@@ -16,6 +18,7 @@ def lecturaM():
     
     if leer.filename == "":
         messagebox.showerror(message="Archivo no seleccionado")
+        report.add(''+str(fechaHora())+'Error: Archivo no seleccionado')
         leer.destroy()
     else:
         leer.destroy()
@@ -30,14 +33,28 @@ def lecturaM():
             if hijo.tag == "matriz":
                 for nieto in hijo:
                     if nieto.tag=="nombre":
-                        nombre=nieto.text
-                        print(nieto.text)
+                        if nieto.text!="":
+                            nombre=nieto.text
+                            print(nieto.text)
+                        else:
+                            report.add(''+str(fechaHora())+'Error: una matriz no contiene nombre')
                     elif nieto.tag=="filas":
-                        filas=nieto.text
-                        print(nieto.text)
+                        if (nieto.text).isdigit():
+                            filas=nieto.text
+                            #print(nieto.text)
+                        elif nieto.text=="":
+                            report.add(''+str(fechaHora())+'Error: la fila de la matriz '+nombre+' no contiene un numero')
+                        else:
+                            report.add(''+str(fechaHora())+'Error: la fila de la matriz '+nombre+' no es un numero')
                     elif nieto.tag=="columnas":
-                        columna=nieto.text
-                        print(nieto.text)
+                        if (nieto.text).isdigit():
+                            columna=nieto.text
+                            #print(nieto.text)
+                        elif nieto.text=="":
+                            report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no contiene un numero')
+                        else:
+                            report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no es un numero')
+                            #print("no es un numero")
                     elif nieto.tag=="imagen":
                         image=nieto.text
                         image=image.replace(" ", "")
@@ -45,16 +62,89 @@ def lecturaM():
                         print(image)
                     else: continue
                 if nombre!="" and filas!="" and columna!="" and image!="":
-                    lista.add(nombre,filas,columna,image)
-                    nombre=""
-                    filas=""
-                    columna=""
-                    image=""
+                    dato=verific(image)
+                    if int(filas)==dato[0] and int(columna)==dato[1]:
+                        lista.add(nombre,filas,columna,image)
+                        mensje=''+str(fechaHora())+''+nombre+' - Espacios LLenos:'+str(dato[2])+' - Espacios Vacios:'+str(dato[3])
+                        report.add(mensje) 
+                        print(report.tamaño)
+                        nombre=""
+                        filas=""
+                        columna=""
+                        image=""
                 else:
-                    if nombre!="":
-                        print("no existe el nombre de la matriz")
-                        continue
+                    report.add(''+str(fechaHora())+'Error: No se pudo guardar la matriz hace falta un elemento')
+                    continue
             else:
-                continue
+                report.add(''+str(fechaHora())+'Error: No contiene tag "matriz" una de  de las matrices archivo .xml')
+                for nieto in hijo:
+                    if nieto.tag=="nombre":
+                        if nieto.text!="":
+                            nombre=nieto.text
+                            print(nieto.text)
+                        else:
+                            report.add(''+str(fechaHora())+'Error: una matriz no contiene nombre')
+                    elif nieto.tag=="filas":
+                        if (nieto.text).isdigit():
+                            filas=nieto.text
+                            #print(nieto.text)
+                        elif nieto.text=="":
+                            report.add(''+str(fechaHora())+'Error: la fila de la matriz '+nombre+' no contiene un numero')
+                        else:
+                            report.add(''+str(fechaHora())+'Error: la fila de la matriz '+nombre+' no es un numero')
+                    elif nieto.tag=="columnas":
+                        if (nieto.text).isdigit():
+                            columna=nieto.text
+                            #print(nieto.text)
+                        elif nieto.text=="":
+                            report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no contiene un numero')
+                        else:
+                            report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no es un numero')
+                            #print("no es un numero")
+                    elif nieto.tag=="imagen":
+                        image=nieto.text
+                        image=image.replace(" ", "")
+                        image=image.replace("\t","")
+                        print(image)
+                    else: continue
+                if nombre!="" and filas!="" and columna!="" and image!="":
+                    dato=verific(image)
+                    if int(filas)==dato[0] and int(columna)==dato[1]:
+                        lista.add(nombre,filas,columna,image)
+                        mensje=''+str(fechaHora())+''+nombre+' - Espacios LLenos:'+str(dato[2])+' - Espacios Vacios:'+str(dato[3])
+                        report.add(mensje) 
+                        print(report.tamaño)
+                        nombre=""
+                        filas=""
+                        columna=""
+                        image=""
+                else:
+                    report.add(''+str(fechaHora())+'Error: No se pudo guardar la matriz hace falta un elemento')
+                    continue
+    Archivo.close()
     leer.mainloop()
-#lectura()   
+    #lectura()  
+def verific(picture):
+    from listaSimpleAuxiliar import listaEnlazadaMatriz as ListaAux
+    matrizOriginal=ListaAux()
+    picture= picture.split("\n")
+    picture.pop(0)
+    numero=int(len(picture))
+    picture.pop(numero-1)
+    columna=int(len(picture[0]))
+    fila=int(len(picture))
+    #picture=picture.remove("")
+    for x in range(fila-1):
+        for y in range(columna-1):
+            if picture[x][y]=="*":
+                matrizOriginal.add(x+1,y+1,picture[x][y]) 
+    llenos=matrizOriginal.tamaño
+    vacios=(fila*columna)-matrizOriginal.tamaño 
+    return fila,columna,llenos,vacios            
+   
+def fechaHora():
+    from datetime import datetime
+    time= datetime.now()
+    dato=''+str(time.day)+'/'+str(time.month)+'/'+str(time.year)+' - '
+    dato+=''+str(time.hour)+':'+str(time.minute)+':'+str(time.second)+' - '
+    return dato
