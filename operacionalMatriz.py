@@ -27,8 +27,8 @@ def matriz(nombre,bandera):
     numero=int(len(picture))
     picture.pop(numero-1)
     #picture=picture.remove("")
-    for x in range(fila-1):
-        for y in range(columna-1):
+    for x in range(fila):
+        for y in range(columna):
             if picture[x][y]=="*":
                 matrizOriginal.insertar(x+1,y+1,picture[x][y])
     sizeMatriz=int(len(picture))+2                

@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+from inicio import report
 from listaSimpleEnlazada import listaEnlazadaMatriz as guardar
 
 lista=""
@@ -15,7 +16,11 @@ def lecturaM():
     leer.withdraw()
     leer.filename=filedialog.askopenfilename(initialdir="c:/Desktop", title="Selelcionar Archivo",filetypes=(("Archivo xml","*.xml"),("all files","*.*")))
     #leer.destroy()
-    
+    def cerrar_app():
+            leer.destroy()
+            #menus()
+            
+    leer.protocol("WM_DELETE_WINDOW", cerrar_app)    
     if leer.filename == "":
         messagebox.showerror(message="Archivo no seleccionado")
         report.add(''+str(fechaHora())+'Error: Archivo no seleccionado')
@@ -56,10 +61,13 @@ def lecturaM():
                             report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no es un numero')
                             #print("no es un numero")
                     elif nieto.tag=="imagen":
-                        image=nieto.text
-                        image=image.replace(" ", "")
-                        image=image.replace("\t","")
-                        print(image)
+                        if nieto.text!="":
+                            image=nieto.text
+                            image=image.replace(" ", "")
+                            image=image.replace("\t","")
+                            print(image)
+                        else:
+                            report.add(''+str(fechaHora())+'Error: la matriz no contiene una imagen para procesar')
                     else: continue
                 if nombre!="" and filas!="" and columna!="" and image!="":
                     dato=verific(image)
@@ -102,10 +110,13 @@ def lecturaM():
                             report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no es un numero')
                             #print("no es un numero")
                     elif nieto.tag=="imagen":
-                        image=nieto.text
-                        image=image.replace(" ", "")
-                        image=image.replace("\t","")
-                        print(image)
+                        if nieto.text!="":
+                            image=nieto.text
+                            image=image.replace(" ", "")
+                            image=image.replace("\t","")
+                            print(image)
+                        else:
+                            report.add(''+str(fechaHora())+'Error: la matriz no contiene una imagen para procesar')
                     else: continue
                 if nombre!="" and filas!="" and columna!="" and image!="":
                     dato=verific(image)

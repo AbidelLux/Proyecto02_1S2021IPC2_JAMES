@@ -1,6 +1,8 @@
 from tkinter import * 
 from tkinter import messagebox
 from tkinter import ttk
+from inicio import report
+from archivoLectura import fechaHora
 from tkPDFViewer import tkPDFViewer as pdf
 #REPORT=""
 respuesta=""
@@ -113,8 +115,10 @@ def menus():
                 venP.destroy() 
             elif respuesta=="":
                 messagebox.showerror(message="Por favor llene el Cuadro de Texto")
+                report.add(''+str(fechaHora())+'Error: No lleno el cuadro de texto')
             else:
                 messagebox.showerror(message="El nombre de la matriz no existe")
+                report.add(''+str(fechaHora())+'Error: la Matriz buscada no existe')
         #
         boton=Button(venP,text="Buscar", command=ok)
         boton.grid(row=4, column=0, padx=5,pady=15)
@@ -236,9 +240,11 @@ def menus():
                     menus()
                 else:
                     messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                    report.add(''+str(fechaHora())+'Error: No se lleno el cuadro de texto')
                     #limpiarVen()
             else:
                 messagebox.showerror(message="El nombre la matriz no existe")
+                report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')
         boton=Button(VenLimpiar,text="Eliminar", command=ok2)
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))        
@@ -354,13 +360,17 @@ def menus():
                                 menus()
                         else:
                                 messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                                report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadro de texto')
                                 #limpiarVen()   
                     else:
                             messagebox.showerror(message="La fila o Columuna es mayor de la matriz")    
+                            report.add(''+str(fechaHora())+'Error: La fila o Columuna es mayor de la matriz')
                 else:
-                    messagebox.showerror(message="Lo sentimos pero esto es un cuadrado")             
+                    messagebox.showerror(message="Lo sentimos pero esto es un cuadrado")        
+                    report.add(''+str(fechaHora())+'Error: Esta intentando crear un rectangulo pero es un cuadrado')     
             else:  
-                messagebox.showerror(message="El nombre de la matriz no existe")       
+                messagebox.showerror(message="El nombre de la matriz no existe")  
+                report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no es un numero')     
         boton=Button(VenLimpiar,text="Agregar", command=ok4)
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))
@@ -456,11 +466,14 @@ def menus():
                         menus()
                     else:
                         messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                        report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
                         #limpiarVen()   
                 else:
                     messagebox.showerror(message="La fila o Columuna es mayor de la matriz")    
+                    report.add(''+str(fechaHora())+'Error: La fila o Columuna es mayor de la matriz')
             else:  
                 messagebox.showerror(message="El nombre de la matriz no existe")   
+                report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')
             print()
         boton=Button(VenLimpiar,text="Agregar", command=ok5)
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
@@ -536,7 +549,7 @@ def menus():
             from archivoLectura import lista
             from operacionalMatriz import agregar_H
             from operacionalMatriz import matriz
-            global bandera,tipoL
+            global bandera,tipoL,letra
             #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
@@ -560,9 +573,11 @@ def menus():
                             menus()
                         else:
                             messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                            report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
                             #limpiarVen()   
                     else:
-                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")         
+                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")  
+                        report.add(''+str(fechaHora())+'Error: La cantidad de elementos supera el tamaño de la fila de la matriz')       
                 elif tipoL=="vertical":
                     tamano=(int(respuesta2)+int(respuesta))-1
                     if tamano <= int(dato[1]):
@@ -575,11 +590,14 @@ def menus():
                             menus()
                         else:
                             messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                            report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
                             #limpiarVen()   
                     else:
-                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")  
+                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz") 
+                        report.add(''+str(fechaHora())+'Error: La cantidad de elementos supera el tamaño de la fila de la matriz')    
             else:  
-                messagebox.showerror(message="El nombre de la matriz no existe")            
+                messagebox.showerror(message="El nombre de la matriz no existe")  
+                report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')             
         boton=Button(VenLimpiar,text="Agregar", command=ok3)
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))

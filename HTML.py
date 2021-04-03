@@ -32,7 +32,7 @@ def pageweb():
         #textPr
         {
             width:800px;
-            height:400px;
+            height:auto;
             background-color:#1d1d1d;
             color:#fff;
             margin: 0 auto;
