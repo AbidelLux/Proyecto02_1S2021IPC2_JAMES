@@ -68,14 +68,18 @@ def lecturaM():
                 if nombre!="" and filas!="" and columna!="" and image!="":
                     dato=verific(image)
                     if int(filas)==dato[0] and int(columna)==dato[1]:
-                        lista.add(nombre,filas,columna,image)
-                        mensje=''+str(fechaHora())+''+nombre+' - Espacios LLenos:'+str(dato[2])+' - Espacios Vacios:'+str(dato[3])
-                        report.add(mensje) 
-                        print(report.tamaño)
-                        nombre=""
-                        filas=""
-                        columna=""
-                        image=""
+                        if lista.buscar2(nombre)==False:
+                            lista.add(nombre,filas,columna,image)
+                            mensje=''+str(fechaHora())+''+nombre+' - Espacios LLenos:'+str(dato[2])+' - Espacios Vacios:'+str(dato[3])
+                            report.add(mensje) 
+                            print(report.tamaño)
+                            nombre=""
+                            filas=""
+                            columna=""
+                            image=""
+                        else:
+                             report.add(''+str(fechaHora())+'Error: No se pudo guardar La matriz '+str(nombre)+' porque ya existe')
+                             continue
                 else:
                     report.add(''+str(fechaHora())+'Error: No se pudo guardar la matriz hace falta un elemento')
                     continue
@@ -117,18 +121,22 @@ def lecturaM():
                 if nombre!="" and filas!="" and columna!="" and image!="":
                     dato=verific(image)
                     if int(filas)==dato[0] and int(columna)==dato[1]:
-                        lista.add(nombre,filas,columna,image)
-                        mensje=''+str(fechaHora())+''+nombre+' - Espacios LLenos:'+str(dato[2])+' - Espacios Vacios:'+str(dato[3])
-                        report.add(mensje) 
-                        print(report.tamaño)
-                        nombre=""
-                        filas=""
-                        columna=""
-                        image=""
+                        if lista.buscar2(nombre)==False:
+                            lista.add(nombre,filas,columna,image)
+                            mensje=''+str(fechaHora())+''+nombre+' - Espacios LLenos:'+str(dato[2])+' - Espacios Vacios:'+str(dato[3])
+                            report.add(mensje) 
+                            print(report.tamaño)
+                            nombre=""
+                            filas=""
+                            columna=""
+                            image=""
+                        else:
+                             report.add(''+str(fechaHora())+'Error: No se pudo guardar La matriz '+str(nombre)+' porque ya existe')
+                             continue
                 else:
                     report.add(''+str(fechaHora())+'Error: No se pudo guardar la matriz hace falta un elemento')
                     continue
-    Archivo.close()
+        Archivo.close()
     leer.mainloop()
 def verific(picture):
     from listaSimpleAuxiliar import listaEnlazadaMatriz as ListaAux

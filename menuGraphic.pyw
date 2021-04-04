@@ -731,7 +731,10 @@ def menus():
         boton1.place(relx=0.17,rely=0.75,relwidth=0.3,relheight=0.15)
         boton1.config(font=("verdana",12),bg="#b8daba")
         
-        boton2=Button(ven,text="Cancel", command=archivoAgregar)
+        def cancel():
+            ven.destroy()
+            menus()             
+        boton2=Button(ven,text="Cancel", command=cancel)
         boton2.place(relx=0.50,rely=0.75,relwidth=0.3,relheight=0.15)
         boton2.config(font=("verdana",12),bg="#b8daba")
         ven.mainloop()
@@ -768,6 +771,86 @@ def menus():
     def report():
         from HTML import pageweb
         pageweb()
+    def modificar():
+        global Archivo
+        from archivoLectura import lista
+        venP=Tk()
+        def cerrar_app():
+            venP.destroy()
+            menus()
+            
+        venP.protocol("WM_DELETE_WINDOW", cerrar_app)   
+        label=Label(venP,text="Ingrese el nombre  de la Matriz")
+        label.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        label.config(justify="center" , state="normal",font=("Verdana",12))
+
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
+
+        #creando la caja de texto 
+        entry=ttk.Combobox(venP,state="readonly",values=dato)
+        entry.grid(row=3,column=0,padx=5,pady=10)
+        entry.config(font=("Verdana",12))
+
+        def ok():
+            from operacionalMatriz import modificar
+            from archivoLectura import lista
+            global respuesta
+            #entry.focus_set()
+            respuesta=entry.get()
+            if lista.buscar2(respuesta)==True:
+                modificar(respuesta)
+                messagebox.showinfo(message="Se ha modificado el Archivo correctamente")
+                venP.destroy() 
+                #menus()
+        #
+        boton=Button(venP,text="Modificar", command=ok)
+        boton.grid(row=4, column=0, padx=5,pady=15)
+        #venP.destroy()    
+        venP.mainloop()
+    def guardar():
+        global Archivo
+        from archivoLectura import lista
+        venP=Tk()
+        def cerrar_app():
+            venP.destroy()
+            #menus()
+            
+        venP.protocol("WM_DELETE_WINDOW", cerrar_app)   
+        label=Label(venP,text="Ingrese el nombre  de la Matriz")
+        label.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        label.config(justify="center" , state="normal",font=("Verdana",12))
+
+        if Archivo==True:   
+            dato=lista.crearlist()
+        else:
+            dato=""
+
+        #creando la caja de texto 
+        entry=Entry(venP)
+        entry.grid(row=3,column=0,padx=5,pady=10)
+        entry.config(font=("Verdana",12))
+
+        def ok():
+            from operacionalMatriz import guardar
+            from archivoLectura import lista
+            global respuesta
+            #entry.focus_set()
+            respuesta=entry.get()
+            if lista.buscar2(respuesta)==False:
+                guardar(respuesta)
+                messagebox.showinfo(message="Se ha modificado el Archivo correctamente")
+                venP.destroy() 
+                #menus()
+            else:
+                messagebox.showerror(message="La matriz no existe")
+                report.add(''+str(fechaHora())+'Error: la matriz '+respuesta+' no existe')
+        boton=Button(venP,text="guardar", command=ok)
+        boton.grid(row=4, column=0, padx=5,pady=15)
+        #venP.destroy()    
+        venP.mainloop()           
     root=Tk()
     root.geometry('1200x600')
     root.title("Menu Principal")
@@ -869,6 +952,14 @@ def menus():
     menuArchivo2.add_separator()
     menuArchivo2.add_command(label="Diferencia Simetrica A,B",command=simetrica)
     
+    menuCarga= Menu(menubar, tearoff=0)
+    menuCarga.add_cascade(label="Abrir",command=lectura)
+    menuCarga.add_separator()
+    menuCarga.add_cascade(label="Modificar",command=modificar)
+    menuCarga.add_separator()
+    menuCarga.add_cascade(label="Guardar Como",command=guardar)
+    
+    
     menuAyuda=Menu(menubar, tearoff=0)
     menuAyuda.add_cascade(label="Formacion del Estudiante",command=Info)
     menuAyuda.add_separator()
@@ -878,8 +969,9 @@ def menus():
     menuOperacional.add_cascade(label="Operacion a Una imagen",menu=menuArchivo)
     menuOperacional.add_separator()
     menuOperacional.add_cascade(label="Operacion a Dos Imagenes",menu=menuArchivo2)
+    
     #  Creando los titulos del menu
-    menubar.add_cascade(label="Cargar Archivo", command=lectura)
+    menubar.add_cascade(label="Cargar Archivo", menu=menuCarga)
     menubar.add_cascade(label="Operaciones",menu=menuOperacional)
     menubar.add_cascade(label="Reporte", command=report)
     menubar.add_cascade(label="Ayuda", menu=menuAyuda)
