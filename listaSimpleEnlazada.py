@@ -34,7 +34,12 @@ class listaEnlazadaMatriz:
             pic=actual.image
             actual = actual.Siguiente
             yield nombre,x,y,pic
-    
+    def modificar(self,nombre,imagen):
+        actual=self.cola
+        while actual:
+            if nombre==actual.nombre:
+                actual.image=imagen
+            actual=actual.Siguiente
     def crearlista(self,b,v):
         dato=""
         for x in range(b):
