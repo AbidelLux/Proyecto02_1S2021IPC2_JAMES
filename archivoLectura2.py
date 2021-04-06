@@ -80,6 +80,9 @@ def lecturaM():
                         else:
                              report.add(''+str(fechaHora())+'Error: No se pudo guardar La matriz '+str(nombre)+' porque ya existe')
                              continue
+                    else:
+                        report.add(''+str(fechaHora())+'Error: No se pudo guardar La matriz '+str(nombre)+' fila o columna no coicide con la Imagen')
+                        continue
                 else:
                     report.add(''+str(fechaHora())+'Error: No se pudo guardar la matriz hace falta un elemento')
                     continue
@@ -133,6 +136,9 @@ def lecturaM():
                         else:
                              report.add(''+str(fechaHora())+'Error: No se pudo guardar La matriz '+str(nombre)+' porque ya existe')
                              continue
+                    else:
+                        report.add(''+str(fechaHora())+'Error: No se pudo guardar La matriz '+str(nombre)+' fila o columna no coicide con la Imagen')
+                        continue
                 else:
                     report.add(''+str(fechaHora())+'Error: No se pudo guardar la matriz hace falta un elemento')
                     continue

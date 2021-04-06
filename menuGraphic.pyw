@@ -1,7 +1,7 @@
 from tkinter import * 
 from tkinter import messagebox
 from tkinter import ttk
-from inicio import report
+#from inicio import report
 from archivoLectura import fechaHora
 from tkPDFViewer import tkPDFViewer as pdf
 #REPORT=""
@@ -219,6 +219,7 @@ def menus():
             global bandera,letra
             from operacionalMatriz import deletMatriz
             from archivoLectura import lista
+            from inicio import report
             #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
@@ -229,22 +230,33 @@ def menus():
             respuesta1=dato2.get()#respuesta de Y1
             respuesta2=dato3.get()#respuesta de X2
             respuesta3=dato4.get()#respuesta de Y2
-            
-            if lista.buscar2(nombre)==True:
-                if respuesta !="" and respuesta1 !="" and respuesta2 !="" and respuesta3 !="" and nombre !="":
-                    VenLimpiar.destroy() 
-                    deletMatriz(nombre,respuesta,respuesta1,respuesta2,respuesta3)
-                    bandera=True
-                    letra="Limpiar Zona "+str(respuesta)+","+str(respuesta1)+" "
-                    letra+=""+str(respuesta2)+","+str(respuesta3)
-                    menus()
+            BanderaEt=False
+            if respuesta.isdigit() and respuesta1.isdigit() and respuesta2.isdigit() and respuesta3.isdigit():
+                if int(respuesta)!=0 and int(respuesta1)!=0 and int(respuesta2)!=0 and int(respuesta3)!=0:
+                    BanderaEt=True
                 else:
+                    messagebox.showerror(message="El numero ingresado debe ser mayor de cero")
+                    report.add(''+str(fechaHora())+'Error: El usuario a ingresado un numero menor a 1')                    
+            elif  respuesta =="" or respuesta1 =="" or respuesta2 =="" or respuesta3 =="" or nombre =="":
                     messagebox.showerror(message="Por favor llene todos los cuadros de texto")
-                    report.add(''+str(fechaHora())+'Error: No se lleno el cuadro de texto')
-                    #limpiarVen()
+                    report.add(''+str(fechaHora())+'Error: No se lleno el cuadro de texto')                
             else:
-                messagebox.showerror(message="El nombre la matriz no existe")
-                report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')
+                messagebox.showerror(message="La informacion ingresada en los cuadro de texto no es un numero entero")
+                report.add(''+str(fechaHora())+'Error: La informacion ingresada en los cuadro de texto no es un numero entero')
+                
+                
+            if BanderaEt==True:    
+                if lista.buscar2(nombre)==True:
+                    if respuesta !="" and respuesta1 !="" and respuesta2 !="" and respuesta3 !="" and nombre !="":
+                        VenLimpiar.destroy() 
+                        deletMatriz(nombre,respuesta,respuesta1,respuesta2,respuesta3)
+                        bandera=True
+                        letra="Limpiar Zona "+str(respuesta)+","+str(respuesta1)+" "
+                        letra+=""+str(respuesta2)+","+str(respuesta3)
+                        menus()
+                else:
+                    messagebox.showerror(message="El nombre la matriz no existe")
+                    report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')
         boton=Button(VenLimpiar,text="Eliminar", command=ok2)
         boton.place(relx=0.35,rely=0.8,relwidth=0.3,relheight=0.1)
         boton.config(font=("verdana",12))        
@@ -334,6 +346,7 @@ def menus():
             from archivoLectura import lista
             from operacionalMatriz import agregar_R
             from operacionalMatriz import matriz
+            from inicio import report
             
             #entry.focus_set()
             dato1.focus_set()
@@ -347,27 +360,35 @@ def menus():
             #matriz(nombre)
             if lista.buscar2(nombre)==True:
                 dato=lista.buscar3(nombre)
-                fila=(int(respuesta)+int(respuesta3))-1
-                columna=(int(respuesta1)+int(respuesta2))-1
-                if fila !=columna:
-                    if columna<= int(dato[2]) and fila<=int(dato[1]):
-                        if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
-                                VenLimpiar.destroy() 
-                                agregar_R(nombre,respuesta,respuesta1,str(columna),str(fila))
-                                bandera=True
-                                letra="Agregar Rectangulo "+str(respuesta)+","+str(respuesta1)+" "
-                                letra+=""+str(respuesta2)+"x"+str(respuesta3)
-                                menus()
+                if respuesta.isdigit() and respuesta1.isdigit() and respuesta2.isdigit() and respuesta3.isdigit():
+                    fila=(int(respuesta)+int(respuesta3))-1
+                    columna=(int(respuesta1)+int(respuesta2))-1
+                    if fila !=columna:
+                        if columna<= int(dato[2]) and fila<=int(dato[1]):
+                            if int(respuesta)!=0 and int(respuesta1)!=0 and int(respuesta2)!=0 and int(respuesta3)!=0:
+                                if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                                    VenLimpiar.destroy() 
+                                    agregar_R(nombre,respuesta,respuesta1,str(columna),str(fila))
+                                    bandera=True
+                                    letra="Agregar Rectangulo "+str(respuesta)+","+str(respuesta1)+" "
+                                    letra+=""+str(respuesta2)+"x"+str(respuesta3)
+                                    menus()
+                                else:
+                                    messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                                    report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadro de texto')
+                                    #limpiarVen() 
+                            else:
+                                messagebox.showerror(message="El numero ingresado debe ser mayor de cero")
+                                report.add(''+str(fechaHora())+'Error: El usuario a ingresado un numero menor a 1')                                    
                         else:
-                                messagebox.showerror(message="Por favor llene todos los cuadros de texto")
-                                report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadro de texto')
-                                #limpiarVen()   
-                    else:
                             messagebox.showerror(message="La fila o Columuna es mayor de la matriz")    
-                            report.add(''+str(fechaHora())+'Error: La fila o Columuna es mayor de la matriz')
+                            report.add(''+str(fechaHora())+'Error: La fila o Columuna es mayor de la matriz')                           
+                    else:
+                        messagebox.showerror(message="Lo sentimos pero esto es un cuadrado")        
+                        report.add(''+str(fechaHora())+'Error: Esta intentando crear un rectangulo pero es un cuadrado')                             
                 else:
-                    messagebox.showerror(message="Lo sentimos pero esto es un cuadrado")        
-                    report.add(''+str(fechaHora())+'Error: Esta intentando crear un rectangulo pero es un cuadrado')     
+                    messagebox.showerror(message="La informacion ingresada en los cuadro de texto no es un numero entero positivo")
+                    report.add(''+str(fechaHora())+'Error: La informacion ingresada en los cuadro de texto no es un numero entero positivo')     
             else:  
                 messagebox.showerror(message="El nombre de la matriz no existe")  
                 report.add(''+str(fechaHora())+'Error: la Columna de la matriz '+nombre+' no es un numero')     
@@ -442,8 +463,10 @@ def menus():
         dato3.place(relx=0.4,rely=0.6,relwidth=0.2,relheight=0.10)
         dato3.config(justify="center",state="normal",font=("Verdana",12))        
         def ok5():
+            global bandera,letra
             from archivoLectura import lista
             from operacionalMatriz import agregar_T
+            from inicio import report
             #entry.focus_set()
             dato1.focus_set()
             dato2.focus_set()
@@ -451,26 +474,34 @@ def menus():
             nombre=entry.get()#respuesta nombre 
             respuesta=dato1.get()#respuesta de X1
             respuesta1=dato2.get()#respuesta de Y1
-            respuesta2=dato3.get()#respuesta de X2
+            respuesta2=dato3.get()#respuesta de longuitud
             if lista.buscar2(nombre)==True:
                 dato=lista.buscar3(nombre)
-                fila=(int(respuesta)+int(respuesta2))-1
-                columna=(int(respuesta1)+int(respuesta2))-1
-                if columna<= int(dato[2]) and fila<=int(dato[1]):
-                    if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
-                        VenLimpiar.destroy() 
-                        agregar_T(nombre,respuesta,respuesta1,str(fila),str(columna))
-                        bandera=True
-                        letra="Agregar Triangulo Rectangulo "+str(respuesta)+","+str(respuesta1)+" "
-                        letra+=""+str(respuesta2)
-                        menus()
+                if respuesta.isdigit() and respuesta1.isdigit() and respuesta2.isdigit():
+                    fila=(int(respuesta)+int(respuesta2))-1
+                    columna=(int(respuesta1)+int(respuesta2))-1
+                    if columna<= int(dato[2]) and fila<=int(dato[1]):
+                        if int(respuesta)!=0 and int(respuesta1)!=0 and int(respuesta2)!=0: 
+                            if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                                VenLimpiar.destroy() 
+                                agregar_T(nombre,respuesta,respuesta1,str(fila),str(columna))
+                                bandera=True
+                                letra="Agregar Triangulo Rectangulo "+str(respuesta)+","+str(respuesta1)+" "
+                                letra+=""+str(respuesta2)
+                                menus()
+                            else:
+                                messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                                report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
+                                #limpiarVen()   
+                        else:
+                            messagebox.showerror(message="El numero ingresado debe ser mayor de cero")
+                            report.add(''+str(fechaHora())+'Error: El usuario a ingresado un numero menor a 1')                                  
                     else:
-                        messagebox.showerror(message="Por favor llene todos los cuadros de texto")
-                        report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
-                        #limpiarVen()   
+                        messagebox.showerror(message="La fila o Columuna es mayor de la matriz")    
+                        report.add(''+str(fechaHora())+'Error: La fila o Columuna es mayor de la matriz')                       
                 else:
-                    messagebox.showerror(message="La fila o Columuna es mayor de la matriz")    
-                    report.add(''+str(fechaHora())+'Error: La fila o Columuna es mayor de la matriz')
+                    messagebox.showerror(message="La informacion ingresada en los cuadro de texto no es un numero entero positivo")
+                    report.add(''+str(fechaHora())+'Error: La informacion ingresada en los cuadro de texto no es un numero entero') 
             else:  
                 messagebox.showerror(message="El nombre de la matriz no existe")   
                 report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')
@@ -549,6 +580,7 @@ def menus():
             from archivoLectura import lista
             from operacionalMatriz import agregar_H
             from operacionalMatriz import matriz
+            from inicio import report
             global bandera,tipoL,letra
             #entry.focus_set()
             dato1.focus_set()
@@ -562,39 +594,55 @@ def menus():
             if lista.buscar2(nombre)==True:
                 dato=lista.buscar3(nombre)
                 if tipoL=="horizontal":
-                    tamano=(int(respuesta1)+int(respuesta2))-1
-                    if tamano <= int(dato[2]):
-                        if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
-                            VenLimpiar.destroy() 
-                            agregar_H(nombre,respuesta,respuesta1,respuesta,str(tamano))
-                            bandera=True
-                            letra="Agregar Linea Horizontal "+str(respuesta)+","+str(respuesta1)+" "
-                            letra+=""+str(respuesta2)
-                            menus()
+                    if respuesta.isdigit() and respuesta1.isdigit() and respuesta2.isdigit():
+                        tamano=(int(respuesta1)+int(respuesta2))-1
+                        if tamano <= int(dato[2]):
+                            if int(respuesta)!=0 and int(respuesta1)!=0 and int(respuesta2)!=0:
+                                if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                                    VenLimpiar.destroy() 
+                                    agregar_H(nombre,respuesta,respuesta1,respuesta,str(tamano))
+                                    bandera=True
+                                    letra="Agregar Linea Horizontal "+str(respuesta)+","+str(respuesta1)+" "
+                                    letra+=""+str(respuesta2)
+                                    menus()
+                                else:
+                                    messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                                    report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
+                                    #limpiarVen()   
+                            else:
+                                messagebox.showerror(message="El numero ingresado debe ser mayor de cero")
+                                report.add(''+str(fechaHora())+'Error: El usuario a ingresado un numero menor a 1')
                         else:
-                            messagebox.showerror(message="Por favor llene todos los cuadros de texto")
-                            report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
-                            #limpiarVen()   
+                            messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")  
+                            report.add(''+str(fechaHora())+'Error: La cantidad de elementos supera el tamaño de la fila de la matriz')  
                     else:
-                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz")  
-                        report.add(''+str(fechaHora())+'Error: La cantidad de elementos supera el tamaño de la fila de la matriz')       
+                        messagebox.showerror(message="La informacion ingresada en los cuadro de texto no es un numero entero positivo")
+                        report.add(''+str(fechaHora())+'Error: La informacion ingresada en los cuadro de texto no es un numero entero positivo')                                 
                 elif tipoL=="vertical":
-                    tamano=(int(respuesta2)+int(respuesta))-1
-                    if tamano <= int(dato[1]):
-                        if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
-                            VenLimpiar.destroy() 
-                            agregar_H(nombre,respuesta,respuesta1,str(tamano),respuesta1)
-                            bandera=True
-                            letra="Agregar Linea Horizontal "+str(respuesta)+","+str(respuesta1)+" "
-                            letra+=""+str(respuesta2)
-                            menus()
+                    if respuesta.isdigit() and respuesta1.isdigit() and respuesta2.isdigit():
+                        tamano=(int(respuesta2)+int(respuesta))-1
+                        if tamano <= int(dato[1]):
+                            if int(respuesta)!=0 and int(respuesta1)!=0 and int(respuesta2)!=0:
+                                if respuesta !="" and respuesta1 !="" and respuesta2 !="" and nombre !="":
+                                    VenLimpiar.destroy() 
+                                    agregar_H(nombre,respuesta,respuesta1,str(tamano),respuesta1)
+                                    bandera=True
+                                    letra="Agregar Linea Vertical "+str(respuesta)+","+str(respuesta1)+" "
+                                    letra+=""+str(respuesta2)
+                                    menus()
+                                else:
+                                    messagebox.showerror(message="Por favor llene todos los cuadros de texto")
+                                    report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
+                                    #limpiarVen()   
+                            else:
+                                messagebox.showerror(message="El numero ingresado debe ser mayor de cero")
+                                report.add(''+str(fechaHora())+'Error: El usuario a ingresado un numero menor a 1')                                    
                         else:
-                            messagebox.showerror(message="Por favor llene todos los cuadros de texto")
-                            report.add(''+str(fechaHora())+'Error: No se ha llenado todos los cuadros de texto')
-                            #limpiarVen()   
-                    else:
-                        messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz") 
-                        report.add(''+str(fechaHora())+'Error: La cantidad de elementos supera el tamaño de la fila de la matriz')    
+                            messagebox.showerror(message="La cantidad de elementos supera el tamaño de la fila de la matriz") 
+                            report.add(''+str(fechaHora())+'Error: La cantidad de elementos supera el tamaño de la fila de la matriz')    
+                else:
+                    messagebox.showerror(message="La informacion ingresada en los cuadro de texto no es un numero entero positivo")
+                    report.add(''+str(fechaHora())+'Error: La informacion ingresada en los cuadro de texto no es un numero entero positivo')                       
             else:  
                 messagebox.showerror(message="El nombre de la matriz no existe")  
                 report.add(''+str(fechaHora())+'Error: El nombre de la matriz no existe')             
@@ -753,6 +801,14 @@ def menus():
         v1.pack()
         v1.place(relx=0.1,rely=0,relwidth=0.75,relheight=1)
         #print()  
+        def abrirPDF():
+            import subprocess
+            #webbrowser.open_new_tab('Documentacion/Documentacion_201602983.pdf')
+            #os.system('Documentacion/Documentacion_201602983.pdf')
+            subprocess.Popen(['Documentacion\Documentacion_201602983.pdf'],shell=True)
+        boton2=Button(lector,text="Abrir PDF \nen otra App", command=abrirPDF)
+        boton2.place(relx=0.86,rely=0.1,relwidth=0.13,relheight=0.1)
+        boton2.config(font=("verdana",12),bg="#b8daba")
         lector.mainloop() 
     def Info():
         panel= Tk()
@@ -961,9 +1017,9 @@ def menus():
     
     
     menuAyuda=Menu(menubar, tearoff=0)
-    menuAyuda.add_cascade(label="Formacion del Estudiante",command=Info)
+    menuAyuda.add_cascade(label="Información del Estudiante",command=Info)
     menuAyuda.add_separator()
-    menuAyuda.add_cascade(label="Documentacion del Programa",command=docPdf)
+    menuAyuda.add_cascade(label="Documentación del Programa",command=docPdf)
     
     menuOperacional=Menu(menubar,tearoff=0)
     menuOperacional.add_cascade(label="Operacion a Una imagen",menu=menuArchivo)
